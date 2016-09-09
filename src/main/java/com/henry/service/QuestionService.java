@@ -10,7 +10,7 @@ import com.github.pagehelper.PageInfo;
 import com.henry.dao.QuestionMapper;
 import com.henry.entity.Question;
 
-@Service(value = "quesService")
+@Service
 public class QuestionService {
 	
 	private QuestionMapper mapper;

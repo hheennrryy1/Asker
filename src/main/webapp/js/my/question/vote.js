@@ -1,56 +1,80 @@
 $(document).ready(function() {
+	
+	var voteUrl = path + "/vote";
+	var unvoteUrl = path + "/unvote";
+	
+	function vote(answerId, mode) {
+		var args = {
+			answerId : answerId,
+			mode : mode
+		};
+		$.post(voteUrl, args, function(json) {
+			
+		});
+	}
+	
+	function unvote(answerId) {
+		var args = {
+			answerId : answerId,
+		};
+		alert(unvoteUrl);
+		$.post(unvoteUrl, args, function(json) {
+			
+		});
+	}
+	
 	$(".vote-like").click(function() {
 		var like = $(this);
-		var dislike = $(this).parent().next("div").children("a");
+		var dislike = like.parent().next("div").children("a");
 		var likeHref = like.attr("href");
 		var dislikeHref = dislike.attr("href");
 		
+		var answerId = like.parent().children("input").val();
+		
+		//点赞的
 		if(likeHref != null && dislikeHref != null){
-			alert("点赞的");
 			like.removeAttr("href");
 			like.parent().addClass("voted");
+			
+			vote(answerId, true);
 		}
+		//取消赞的
 		else if(likeHref == null && dislikeHref != null) {
-			alert("取消赞的");
 			like.attr("href", "#");
 			like.parent().removeClass("voted");
+			
+			unvote(answerId);
 		}
+		//点了反对然后点赞的
 		else if(likeHref != null && dislikeHref == null) {
-			alert("点了反对然后点赞的");
 			like.removeAttr("href");
 			like.parent().addClass("voted");
 			dislike.attr("href", "#");
 			dislike.parent().removeClass("voted");
 		}
 		
-		/*
-		var url = path + "/vote/";
-		var args = {
-		};
-		$.post(url, args, function(json) {
-			alert(json);
-		});
-		*/
 	});
 	
 	$(".vote-dislike").click(function() {
 		var dislike = $(this);
-		var like = $(this).parent().prev("div").children("a");
+		var like = dislike.parent().prev("div").children("a");
 		var dislikeHref = dislike.attr("href");
 		var likeHref = like.attr("href");
 		
+		var answerId = like.parent().children("input").val();
+		
+		//反对的
 		if(likeHref != null && dislikeHref != null){
-			alert("反对的");
 			dislike.removeAttr("href");
 			dislike.parent().addClass("voted");
 		}
+		//取消反对的
 		else if(likeHref != null && dislikeHref == null) {
-			alert("取消反对的");
 			dislike.attr("href", "#");
 			dislike.parent().removeClass("voted");
 		}
+		//点了赞然后点反对的
 		else if(likeHref == null && dislikeHref != null) {
-			alert("点了赞然后点反对的");
 			dislike.removeAttr("href");
 			dislike.parent().addClass("voted");
 			like.attr("href", "#");

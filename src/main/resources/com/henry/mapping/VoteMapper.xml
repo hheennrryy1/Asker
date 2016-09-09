@@ -15,14 +15,14 @@
         select 
         <include refid="Base_Column_List" />
         from vote
-        where user_id = #{userId,jdbcType=INTEGER}
-            and answer_id = #{answerId,jdbcType=INTEGER}
+        where user_id = #{user.id, jdbcType=INTEGER}
+            and answer_id = #{answer.id, jdbcType=INTEGER}
     </select>
     
     <delete id="deleteById" parameterType="VoteKey" >
         delete from vote
-        where user_id = #{userId,jdbcType=INTEGER}
-            and answer_id = #{answerId,jdbcType=INTEGER}
+        where user_id = #{user.id, jdbcType=INTEGER}
+            and answer_id = #{answer.id, jdbcType=INTEGER}
     </delete>
     
     <insert id="insert" parameterType="Vote" >
@@ -31,23 +31,4 @@
         values 
         (#{user.id, jdbcType=INTEGER}, #{answer.id, jdbcType=INTEGER}, #{mode, jdbcType=BIT})
     </insert>
-    
-    <update id="updateByIdSelective" parameterType="Vote" >
-        update vote
-        <set >
-            <if test="mode != null" >
-                mode = #{mode,jdbcType=BIT},
-            </if>
-        </set>
-        where user_id = #{userId,jdbcType=INTEGER}
-            and answer_id = #{answerId,jdbcType=INTEGER}
-    </update>
-    
-    <update id="updateById" parameterType="Vote" >
-        update vote
-        set mode = #{mode,jdbcType=BIT}
-        where user_id = #{userId,jdbcType=INTEGER}
-            and answer_id = #{answerId,jdbcType=INTEGER}
-    </update>
-    
 </mapper>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.henry.dao.VoteMapper;
 import com.henry.entity.Vote;
+import com.henry.entity.VoteKey;
 
 @Service
 public class VoteService {
@@ -18,5 +19,13 @@ public class VoteService {
 	
 	public int insert(Vote vote) {
 		return mapper.insert(vote);
+	}
+	
+	public int delete(VoteKey key) {
+		return mapper.deleteById(key);
+	}
+	
+	public Vote select(VoteKey key) {
+		return mapper.selectById(key);
 	}
 }

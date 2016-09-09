@@ -22,10 +22,13 @@ import com.henry.entity.Question;
 import com.henry.entity.QuestionTag;
 import com.henry.entity.Tag;
 import com.henry.entity.User;
+import com.henry.entity.Vote;
+import com.henry.entity.VoteKey;
 import com.henry.service.AnswerService;
 import com.henry.service.QuestionService;
 import com.henry.service.QuestionTagService;
 import com.henry.service.TagService;
+import com.henry.service.VoteService;
 
 @Controller
 @RequestMapping("/question")
@@ -33,12 +36,13 @@ public class QuestionController {
 	
 	Logger logger = Logger.getLogger(QuestionController.class);
 	
-	public static final int PAGE_SIZE = 1;
+	public static final int PAGE_SIZE = 2;
 	
 	private QuestionService quesService;
 	private TagService tagService;
 	private QuestionTagService questagService;
 	private AnswerService answerService;
+	private VoteService voteService;
 	
 	@Autowired
 	public void setQuesService(QuestionService quesService) {
@@ -58,6 +62,11 @@ public class QuestionController {
 	@Autowired
 	public void setAnswerService(AnswerService answerService) {
 		this.answerService = answerService;
+	}
+	
+	@Autowired
+	public void setVoteService(VoteService voteService) {
+		this.voteService = voteService;
 	}
 
 	//跳转到提问页面
@@ -118,6 +127,26 @@ public class QuestionController {
 		
 		//找到问题下的答案，并分页
 		PageInfo<Answer> page = answerService.selectByQuestionId(id, pageNum, PAGE_SIZE);
+		
+		VoteKey key = new VoteKey();
+		for(Answer a : page.getList()) {
+			key.setAnswer(a);
+			key.setUser(user);
+			Vote vote = voteService.select(key);
+			//没点过
+			if(vote == null) {
+				//Do nothing
+			} 
+			//赞同
+			else if(vote.getMode()) {
+				a.setLiked(true);
+			}
+			//反对
+			else {
+				a.setLiked(false);
+			}
+		}
+		
 		mav.addObject("page", page);
 		//检测用户是否已经回答过问题
 		List<Answer> answers = answerService.selectByQidAndUid(id, user.getId());

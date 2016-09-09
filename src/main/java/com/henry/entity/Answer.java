@@ -13,10 +13,18 @@ public class Answer {
     private Question question;
 
     private String content;
+    
+    //不持久化，作为当前用户是否true赞过，false反对过,null则没点过
+    private Boolean liked;
 
     public Answer(){};
     
-    @Override
+    public Answer(Integer id) {
+		super();
+		this.id = id;
+	}
+
+	@Override
 	public String toString() {
 		return "Answer [id=" + id + ", lastUpdated=" + lastUpdated + ", user=" + user + ", question=" + question
 				+ ", content=" + content + "]";
@@ -61,4 +69,12 @@ public class Answer {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+	public Boolean getLiked() {
+		return liked;
+	}
+
+	public void setLiked(Boolean liked) {
+		this.liked = liked;
+	}
 }

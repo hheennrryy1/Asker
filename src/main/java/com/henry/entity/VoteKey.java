@@ -2,6 +2,7 @@ package com.henry.entity;
 
 //投票的联合主键
 public class VoteKey {
+	
     private User user;
     
     private Answer answer;

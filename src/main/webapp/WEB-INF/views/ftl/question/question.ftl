@@ -50,6 +50,7 @@
 					<div class="col-md-1 col-sm-1 text-center">
 						<div>
 					 		<a href="#" title="这个答案对我有帮助" class="vote-like"><i class="fa fa-caret-up fa-4x"></i></a>
+						 	<input type="hidden" value="${answer.id}" />
 						</div>
 						<div>
 							<a href="#" title="这个答案没有任何帮助" class="vote-dislike"><i class="fa fa-caret-down fa-4x"></i></a>
