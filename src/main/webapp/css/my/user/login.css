@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+	body {
+		background-color: #ECF0F1;
+	}
+	#loginDiv {
+		margin-top: 100px;
+		padding: 20px 20px;
+	}
+	#backgroundDiv {
+		background-image: url("../../../imgs/Background1.png");
+		background-repeat: no-repeat;
+		width: 940px;
+		height: 778px;
+	}
+	.help-block {
+		color: red;
+	}

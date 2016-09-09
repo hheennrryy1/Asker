@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=1000, initial-scale=1.0">
+		<title>注册 - Asker</title>
+		<link rel="shortcut icon" href="imgs/icon/icon-16px.png" />
+		<link rel="stylesheet" href="css/public/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/public/font-awesome.min.css" />
+		<link rel="stylesheet" href="css/public/flat-ui.min.css" />
+		<link rel="stylesheet" href="css/my/user/register.css" />
+		<script src="js/public/jquery.min.js"></script>
+		<script src="js/public/hashes.min.js"></script>
+		<script src="js/my/user/register.js"></script>
+	</head>
+<body>
+	<div class="container text-center">
+		<h2>Asker</h2>
+	</div>
+	
+	<div class="container" id="backgroundDiv">
+		<div class="col-sm-8 col-sm-offset-2" id="registerDiv">
+			<form method="POST" action="user/register" id="loginForm" role="form">
+			
+				<div class="form-group" id="usernameDiv">
+					<div class="input-group">
+						<div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>
+						<input type="text" class="form-control has-error" id="username" name="username"
+							placeholder="用户名，只能由中文、字母或数字组成" required="required"  maxlength="15"/>
+					</div>
+					
+					<div class="help-block">2-15位，只能由中文、字母或数字组成</div>
+					
+				</div>
+				
+	 			<div class="form-group" id="emailDiv">
+					<div class="input-group">
+						<div class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></div>
+						<input type="email" class="form-control" id="email" name="email" 
+							placeholder="邮箱，用于激活" required="required"/>
+					</div>
+					
+					<div class="help-block">邮箱格式错误</div>
+					<div class="help-block">邮箱已存在</div>
+					
+				</div>
+				
+				<div class="form-group" id="passwordDiv">
+					<div class="input-group">
+						<div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>
+						<input type="password" class="form-control" id="password" name="password" 
+							placeholder="密码 6-18位  只能由字母，数字，下划线组成" required="required" maxlength="18"/>
+					</div>
+					
+					<div class="help-block">6-18位 只能由字母，数字，下划线组成</div>
+					
+				</div>
+				
+				<div class="form-group">
+					<button type="button" class="btn btn-primary btn-block">注册</button>
+				</div>
+				
+				<div class="col-sm-offset-8">
+					<a href="login.html">已注册?点击登录</a>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+</body>
+</html>

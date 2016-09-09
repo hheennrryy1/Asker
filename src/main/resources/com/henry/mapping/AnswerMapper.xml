@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.henry.dao.AnswerMapper" >
+    <resultMap id="BaseResultMap" type="Answer" >
+        <id column="aid" property="id" jdbcType="INTEGER" />
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    
+    <resultMap type="Answer" id="RelativeResultMap" extends="BaseResultMap">
+		<association property="user" javaType="User">
+     		<id column="uid" property="id" jdbcType="INTEGER"/>
+			<result column="username" property="username" jdbcType="VARCHAR"/>        	
+			<result column="picture" property="picture" jdbcType="VARCHAR"/>        	
+		</association>
+		<association property="question" javaType="Question">
+     		<id column="qid" property="id" jdbcType="INTEGER"/>
+     		<id column="title" property="title" jdbcType="VARCHAR"/>
+		</association>
+	</resultMap>
+	
+	<sql id="baseSql">
+		select a.id as aid, a.last_updated, a.content, u.id as uid, u.username, u.picture, q.id as qid
+        from answer a join user u on a.user_id = u.id join question q on a.question_id = q.id
+	</sql>
+	    
+    <select id="selectById" resultMap="RelativeResultMap" parameterType="java.lang.Integer">
+    	<include refid="baseSql"></include>
+        where a.id = #{id, jdbcType=INTEGER}
+    </select>
+    
+    <!-- 多对一 取问题下的所有答案 或者 用户的所有答案 或者 判断用户是否曾经回答过某个问题-->
+    <select id="selectByIds" resultMap="RelativeResultMap">
+    	<include refid="baseSql"></include>
+    	<trim prefix="where" prefixOverrides="and">
+    		<if test="questionId != null">
+				and a.question_id = #{questionId, jdbcType=INTEGER}
+    		</if>
+    		<if test="userId != null">
+    			and a.user_id = #{userId, jdbcType=INTEGER}
+    		</if>
+    	</trim>
+    </select>
+    
+    <!-- 为了方便 取用户的所有答案再添加一个方法 -->
+    <select id="selectByUserId"  resultMap="RelativeResultMap" parameterType="java.lang.Integer">
+    	select a.id as aid, a.content as content, q.id as qid, q.title, u.id as uid 
+    	from answer a join user u on a.user_Id = u.id join question q on a.question_Id = q.id
+    	where u.id = #{userId, jdbcType=INTEGER}
+    </select>
+    
+    <delete id="deleteById" parameterType="java.lang.Integer" >
+        delete from answer
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <insert id="insert" parameterType="Answer">
+        insert into answer (id, last_updated, question_id, 
+            user_id, content)
+        values (#{id,jdbcType=INTEGER}, #{lastUpdated,jdbcType=TIMESTAMP}, #{question.id,jdbcType=INTEGER}, 
+            #{user.id,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+    </insert>
+    
+    <insert id="insertSelective" parameterType="Answer" >
+        insert into answer
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="lastUpdated != null" >
+                last_updated,
+            </if>
+            <if test="question != null">
+	            <if test="question.id != null" >
+	                question_id,
+	            </if>
+            </if>
+            <if test="user != null">
+	            <if test="user.id != null" >
+	                user_id,
+	            </if>
+            </if>
+            <if test="content != null" >
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdated != null" >
+                #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="question != null">
+	            <if test="question.id != null" >
+	                #{question.id,jdbcType=INTEGER},
+	            </if>
+            </if>
+            <if test="user != null">
+	            <if test="user.id != null" >
+	                #{user.id,jdbcType=INTEGER},
+	            </if>
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    
+    <update id="updateByIdSelective" parameterType="Answer" >
+        update answer
+        <set >
+            <if test="lastUpdated != null" >
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <update id="updateByIdWithBLOBs" parameterType="Answer" >
+        update answer
+        set last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            question_id = #{question.id,jdbcType=INTEGER},
+            user_id = #{user.id,jdbcType=INTEGER},
+            content = #{content,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <update id="updateById" parameterType="Answer" >
+        update answer
+        set last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            question_id = #{question.id,jdbcType=INTEGER},
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+</mapper>

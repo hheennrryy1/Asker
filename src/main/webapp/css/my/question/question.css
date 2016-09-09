@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+.userInfo {
+	background-color: #ecf0f1;
+}
+.answerContent {
+	margin-bottom: 10px;
+}
+.voted {
+	background-color: #2ECC71;
+}

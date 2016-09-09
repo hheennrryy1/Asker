@@ -1,0 +1,23 @@
+package com.henry.dao;
+
+import java.util.List;
+
+import com.henry.entity.Question;
+
+public interface QuestionMapper {
+	Question selectById(Integer id);
+	
+	List<Question> selectByUserId(Integer userId);
+	
+    int deleteById(Integer id);
+
+    int insert(Question question);
+
+    int insertSelective(Question question);
+
+    int updateByIdSelective(Question question);
+
+    int updateByIdWithBLOBs(Question question);
+
+    int updateById(Question question);
+}
