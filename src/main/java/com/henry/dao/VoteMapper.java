@@ -9,4 +9,6 @@ public interface VoteMapper {
     int insert(Vote vote);
 
     Vote selectById(VoteKey key);
+    
+    int updateById(Vote vote);
 }

@@ -136,14 +136,8 @@ public class QuestionController {
 			//没点过
 			if(vote == null) {
 				//Do nothing
-			} 
-			//赞同
-			else if(vote.getMode()) {
-				a.setLiked(true);
-			}
-			//反对
-			else {
-				a.setLiked(false);
+			} else {
+				a.setLiked(vote.getMode());
 			}
 		}
 		

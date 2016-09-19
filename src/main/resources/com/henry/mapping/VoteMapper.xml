@@ -31,4 +31,11 @@
         values 
         (#{user.id, jdbcType=INTEGER}, #{answer.id, jdbcType=INTEGER}, #{mode, jdbcType=BIT})
     </insert>
+    
+    <update id="updateById" parameterType="Vote">
+    	update vote
+    	set mode = #{mode, jdbcType=BIT}
+    	where user_id = #{user.id, jdbcType=INTEGER}
+        and answer_id = #{answer.id, jdbcType=INTEGER} 
+    </update>
 </mapper>

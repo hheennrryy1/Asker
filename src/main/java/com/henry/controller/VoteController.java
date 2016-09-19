@@ -42,7 +42,7 @@ public class VoteController {
 		vote.setUser(user);
 		vote.setAnswer(new Answer(answerId));
 		voteService.insert(vote);
-		return "test";
+		return "";
 	}
 	
 	//取消赞同或者反对
@@ -54,6 +54,18 @@ public class VoteController {
 		key.setUser(user);
 		key.setAnswer(new Answer(answerId));
 		voteService.delete(key);
+		return "";
+	}
+	
+	@RequestMapping("/updateVote")
+	@ResponseBody
+	public String updateVote(@RequestParam("answerId") Integer answerId,
+								Vote vote,//vote的mode已经set了
+								@ModelAttribute User user) {
+		vote.setUser(user);
+		vote.setAnswer(new Answer(answerId));
+		voteService.updateById(vote);
+		//测试
 		return "";
 	}
 }

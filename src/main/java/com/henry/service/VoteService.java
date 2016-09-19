@@ -28,4 +28,8 @@ public class VoteService {
 	public Vote select(VoteKey key) {
 		return mapper.selectById(key);
 	}
+	
+	public int updateById(Vote vote) {
+		return mapper.updateById(vote);
+	}
 }
