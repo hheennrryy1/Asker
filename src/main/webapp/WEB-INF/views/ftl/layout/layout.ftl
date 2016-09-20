@@ -36,8 +36,7 @@
 
 <#macro htmlBody>
 <body>
-
-	<#if Session.user?? && Session.user.status == false>
+	<#if Session.user?? && !Session.user.status>
 		<div class="alert alert-warning text-center" role="alert">
 			你的邮箱 ${user.email} 尚未验证，部分功能将无法使用 
 		</div>

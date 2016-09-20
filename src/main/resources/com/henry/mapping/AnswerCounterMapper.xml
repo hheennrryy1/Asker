@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henry.dao.AnswerCounterMapper">
+    <resultMap id="BaseResultMap" type="AnswerCounter">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="answer_id" jdbcType="INTEGER" property="answer.id" />
+        <result column="likes_count" jdbcType="INTEGER" property="likesCount" />
+        <result column="dislikes_count" jdbcType="INTEGER" property="dislikesCount" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, answer_id, likes_count, dislikes_count
+    </sql>
+    
+<!--     <select id="" parameterType="java.lang.Integer" resultType="BaseResultMap">
+    </select>
+ -->
+ 	
+ 	<insert id="insert" parameterType="java.lang.Integer">
+ 		insert into answer_counter
+ 		(answer_id)
+ 		values(#{answer.id, jdbcType=INTEGER})
+ 	</insert>
+</mapper>

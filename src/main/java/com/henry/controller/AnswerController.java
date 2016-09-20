@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.henry.entity.Answer;
 import com.henry.entity.Question;
 import com.henry.entity.User;
+import com.henry.service.AnswerCounterService;
 import com.henry.service.AnswerService;
 
 @Controller
@@ -25,10 +26,16 @@ public class AnswerController {
 	Logger logger = Logger.getLogger(AnswerController.class);
 	
 	private AnswerService answerService;
+	private AnswerCounterService counterService;
 
 	@Autowired
 	public void setAnswerService(AnswerService answerService) {
 		this.answerService = answerService;
+	}
+	
+	@Autowired
+	public void setCounterService(AnswerCounterService counterService) {
+		this.counterService = counterService;
 	}
 	
 	//添加答案
@@ -42,9 +49,10 @@ public class AnswerController {
 		q.setId(questionId);
 		answer.setQuestion(q);
 		answerService.insert(answer);
+		counterService.insert(answer.getId());
 		return "redirect:/question/" + questionId + "?pageNum=1";
 	}
-	
+
 	//更新答案
 	@RequestMapping("/update")
 	@ResponseBody

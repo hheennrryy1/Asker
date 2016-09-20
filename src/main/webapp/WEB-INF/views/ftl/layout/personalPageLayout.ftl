@@ -36,9 +36,9 @@
 						<span>${personalPageUser.city!"未填写"}</span> &nbsp;&nbsp;&nbsp;
 						
 						<#if personalPageUser.sex??>
-							<#if personalPageUser.sex == true>
+							<#if personalPageUser.sex>
 									<i class="fa fa-mars"></i>
-								<#elseif personalPageUser.sex == false>
+								<#elseif !personalPageUser.sex>
 									<i class="fa fa-venus"></i>		
 							</#if>
 						</#if>
@@ -58,7 +58,7 @@
 			
 			<div>
 				<span>获得<i class="fa fa-thumbs-up"></i>赞同</span>
-				<#if isMyself == true>
+				<#if isMyself>
 					<span style="float:right;">
 						<a href="${path}/user/edit" class="btn btn-primary">完善我的资料</a>
 					</span>

@@ -54,7 +54,7 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     
-    <insert id="insert" parameterType="Answer">
+    <insert id="insert" parameterType="Answer" useGeneratedKeys="true" keyProperty="id">
         insert into answer (id, last_updated, question_id, 
             user_id, content)
         values (#{id,jdbcType=INTEGER}, #{lastUpdated,jdbcType=TIMESTAMP}, #{question.id,jdbcType=INTEGER}, 

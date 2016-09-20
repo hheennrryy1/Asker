@@ -27,7 +27,7 @@ public class Answer {
 	@Override
 	public String toString() {
 		return "Answer [id=" + id + ", lastUpdated=" + lastUpdated + ", user=" + user + ", question=" + question
-				+ ", content=" + content + "]";
+				+ ", content=" + content + ", liked=" + liked + "]";
 	}
 
 	public Integer getId() {

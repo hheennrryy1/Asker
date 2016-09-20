@@ -32,10 +32,10 @@
 			<div class="form-group">
 				<label class="col-md-2 col-sm-2 control-label">性别</label>
 				<div class="col-sm-1 col-md-1">
-		            <input type="radio" name="sex" value="1" <#if Session.user.sex == true>checked="checked"</#if> /> 男
+		            <input type="radio" name="sex" value="1" <#if Session.user.sex>checked="checked"</#if> /> 男
 				</div>
 				<div class="col-sm-1 col-md-1">
-		            <input type="radio" name="sex" value="0" <#if Session.user.sex == false>checked="checked"</#if> /> 女
+		            <input type="radio" name="sex" value="0" <#if !Session.user.sex>checked="checked"</#if> /> 女
 				</div>
 			</div>
 						

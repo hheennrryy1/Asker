@@ -34,7 +34,7 @@
 							提问于 ${question.createdTime?datetime}
 						</div>
 						<div id="avatar" class="col-md-12">
-							<img src="${question.user.picture!'http://localhost/picture/default.png'}" alt="avatar" class="img-thumbnail" height="36" width="36" >
+							<img src="${question.user.picture!'/picture/default.png'}" alt="avatar" class="img-thumbnail" height="36" width="36" >
 							<a href="${path}/user/${question.user.id}">${question.user.username}</a>
 						</div>
 					</div>
@@ -48,14 +48,16 @@
 			<div class="panel panel-default">
 				<div class="row">
 					<div class="col-md-1 col-sm-1 text-center">
-						<div<#if answer.liked?? && answer.liked == true> class="voted"</#if>>
-					 		<a<#if answer.liked?? && answer.liked == false> href="#"
-									<#elseif answer.liked == null> href="#"</#if> title="这个答案对我有帮助" class="vote-like"><i class="fa fa-caret-up fa-4x"></i></a>
+						<div<#if answer.liked?? && answer.liked> class="voted"</#if>>
+						
+					 		<a<#if answer.liked?? && !answer.liked> href="#"
+									<#elseif !answer.liked??> href="#"</#if> title="这个答案对我有帮助" class="vote-like"><i class="fa fa-caret-up fa-4x"></i></a>
 						 	<input type="hidden" value="${answer.id}" />
 						</div>
-						<div<#if answer.liked?? && answer.liked == false> class="voted"</#if>>
-							<a<#if answer.liked?? && answer.liked == true> href="#"
-									<#elseif answer.liked == null> href="#"</#if> title="这个答案没有任何帮助" class="vote-dislike"><i class="fa fa-caret-down fa-4x"></i></a>
+						<div<#if answer.liked?? && !answer.liked> class="voted"</#if>>
+						
+							<a<#if answer.liked?? && answer.liked> href="#"
+									<#elseif !answer.liked??> href="#"</#if> title="这个答案没有任何帮助" class="vote-dislike"><i class="fa fa-caret-down fa-4x"></i></a>
 						</div>
 					</div>
 					<div class="panel-body col-md-11">
@@ -77,7 +79,7 @@
 							<a href="">评论</a>
 						</div>
 						<div class="col-md-5 text-right">
-							<img src="${answer.user.picture!'http://localhost/picture/default.png'}" alt="avatar" class="img-thumbnail" height="36" width="36" >
+							<img src="${answer.user.picture!'/picture/default.png'}" alt="avatar" class="img-thumbnail" height="36" width="36" >
 							<a href="${path}/user/${answer.user.id}">${answer.user.username}</a>
 						</div>
 					</div>
@@ -85,7 +87,7 @@
 			</div>
 		</#list>
 		
-		<#if Session.user?? && Session.user.status == true && answered == false>
+		<#if Session.user?? && Session.user.status && !answered>
 			<form action="${path}/answer/add" method="POST">
 				<input type="hidden" value="${question.id}" name="questionId"/>
 				<div class="col-md-11 col-md-offset-1">
@@ -109,7 +111,7 @@
 			</div> 
 		</#if>
 				
-		<#if answered == true>
+		<#if answered>
 			<div class="col-md-offset-3 col-md-8">
 				<span>一个问题你只能回答一次，但你可以对现有的回答进行修改</span>
 			</div>

@@ -2,24 +2,29 @@ $(document).ready(function() {
 	
 	var voteUrl = path + "/vote";
 	var unvoteUrl = path + "/unvote";
+	var updateUrl = path + "/updateVote";
 	
 	function vote(answerId, mode) {
 		var args = {
 			answerId : answerId,
 			mode : mode
 		};
-		$.post(voteUrl, args, function(json) {
-			
-		});
+		$.post(voteUrl, args);
 	}
 	
 	function unvote(answerId) {
 		var args = {
 			answerId : answerId
 		};
-		$.post(unvoteUrl, args, function(json) {
-			
-		});
+		$.post(unvoteUrl, args);
+	}
+	
+	function updateVote(answerId, mode) {
+		var args = {
+				answerId : answerId,
+				mode : mode
+		};
+		$.post(updateUrl, args);
 	}
 	
 	$(".vote-like").click(function() {
@@ -31,7 +36,7 @@ $(document).ready(function() {
 		var answerId = like.parent().children("input").val();
 		
 		//点赞的
-		if(likeHref != null && dislikeHref != null){
+		if(likeHref != null && dislikeHref != null) {
 			like.removeAttr("href");
 			like.parent().addClass("voted");
 			
@@ -41,7 +46,7 @@ $(document).ready(function() {
 		else if(likeHref == null && dislikeHref != null) {
 			like.attr("href", "#");
 			like.parent().removeClass("voted");
-			alert("sdf");
+			
 			unvote(answerId);
 		}
 		//点了反对然后点赞的
@@ -51,7 +56,7 @@ $(document).ready(function() {
 			dislike.attr("href", "#");
 			dislike.parent().removeClass("voted");
 			
-
+			updateVote(answerId, true);
 		}
 		
 	});
@@ -65,7 +70,7 @@ $(document).ready(function() {
 		var answerId = like.parent().children("input").val();
 		
 		//反对的
-		if(likeHref != null && dislikeHref != null){
+		if(likeHref != null && dislikeHref != null) {
 			dislike.removeAttr("href");
 			dislike.parent().addClass("voted");
 			
@@ -83,7 +88,9 @@ $(document).ready(function() {
 			dislike.removeAttr("href");
 			dislike.parent().addClass("voted");
 			like.attr("href", "#");
-			like.parent().removeClass("voted");			
+			like.parent().removeClass("voted");
+			
+			updateVote(answerId, false);
 		}
 	});
 });

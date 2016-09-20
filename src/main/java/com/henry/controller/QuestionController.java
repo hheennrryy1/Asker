@@ -133,13 +133,12 @@ public class QuestionController {
 			key.setAnswer(a);
 			key.setUser(user);
 			Vote vote = voteService.select(key);
-			//没点过
-			if(vote == null) {
-				//Do nothing
-			} else {
+			if(vote!=null) {
 				a.setLiked(vote.getMode());
 			}
 		}
+		
+		page.getList().forEach(a -> logger.info(a.getLiked()));
 		
 		mav.addObject("page", page);
 		//检测用户是否已经回答过问题
