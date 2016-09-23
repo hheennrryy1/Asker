@@ -23,7 +23,7 @@
 		select a.id as aid, a.last_updated, a.content, u.id as uid, u.username, u.picture, q.id as qid
         from answer a join user u on a.user_id = u.id join question q on a.question_id = q.id
 	</sql>
-	    
+	
     <select id="selectById" resultMap="RelativeResultMap" parameterType="java.lang.Integer">
     	<include refid="baseSql"></include>
         where a.id = #{id, jdbcType=INTEGER}

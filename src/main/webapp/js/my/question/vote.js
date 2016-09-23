@@ -4,93 +4,78 @@ $(document).ready(function() {
 	var unvoteUrl = path + "/unvote";
 	var updateUrl = path + "/updateVote";
 	
-	function vote(answerId, mode) {
+	function vote(answerId, mode, url) {
 		var args = {
 			answerId : answerId,
 			mode : mode
 		};
-		$.post(voteUrl, args);
-	}
-	
-	function unvote(answerId) {
-		var args = {
-			answerId : answerId
-		};
-		$.post(unvoteUrl, args);
-	}
-	
-	function updateVote(answerId, mode) {
-		var args = {
-				answerId : answerId,
-				mode : mode
-		};
-		$.post(updateUrl, args);
+		$.post(url, args);
 	}
 	
 	$(".vote-like").click(function() {
-		var like = $(this);
-		var dislike = like.parent().next("div").children("a");
+		var like = $(this).children("a");
+		var dislike = $(this).next("div").children("a");
 		var likeHref = like.attr("href");
 		var dislikeHref = dislike.attr("href");
 		
-		var answerId = like.parent().children("input").val();
+		var answerId = $(this).children("input").val();
 		
 		//点赞的
 		if(likeHref != null && dislikeHref != null) {
 			like.removeAttr("href");
-			like.parent().addClass("voted");
+			$(this).addClass("voted");
 			
-			vote(answerId, true);
+			vote(answerId, true, voteUrl);
 		}
 		//取消赞的
 		else if(likeHref == null && dislikeHref != null) {
 			like.attr("href", "#");
-			like.parent().removeClass("voted");
+			$(this).removeClass("voted");
 			
-			unvote(answerId);
+			vote(answerId, true, unvoteUrl);
 		}
 		//点了反对然后点赞的
 		else if(likeHref != null && dislikeHref == null) {
 			like.removeAttr("href");
-			like.parent().addClass("voted");
+			$(this).addClass("voted");
 			dislike.attr("href", "#");
 			dislike.parent().removeClass("voted");
 			
-			updateVote(answerId, true);
+			vote(answerId, true, updateUrl);
 		}
 		
 	});
 	
 	$(".vote-dislike").click(function() {
-		var dislike = $(this);
-		var like = dislike.parent().prev("div").children("a");
+		var dislike = $(this).children("a");
+		var like = $(this).prev("div").children("a");
 		var dislikeHref = dislike.attr("href");
 		var likeHref = like.attr("href");
 		
-		var answerId = like.parent().children("input").val();
+		var answerId = $(this).prev("div").children("input").val();
 		
 		//反对的
 		if(likeHref != null && dislikeHref != null) {
 			dislike.removeAttr("href");
-			dislike.parent().addClass("voted");
+			$(this).addClass("voted");
 			
-			vote(answerId, false);
+			vote(answerId, false, voteUrl);
 		}
 		//取消反对的
 		else if(likeHref != null && dislikeHref == null) {
 			dislike.attr("href", "#");
-			dislike.parent().removeClass("voted");
+			$(this).removeClass("voted");
 			
-			unvote(answerId);
+			vote(answerId, false, unvoteUrl);
 		}
 		//点了赞然后点反对的
 		else if(likeHref == null && dislikeHref != null) {
 			dislike.removeAttr("href");
-			dislike.parent().addClass("voted");
+			$(this).addClass("voted");
 			like.attr("href", "#");
 			like.parent().removeClass("voted");
 			
-			updateVote(answerId, false);
+			vote(answerId, false, updateUrl);
 		}
 	});
 });

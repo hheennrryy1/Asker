@@ -55,7 +55,6 @@ public class PersonalPageController {
 	
 	@ModelAttribute
 	public User getSessionUser(HttpSession session) {
-		logger.info("modelattr works");
 		return (User) session.getAttribute("user");
 	}
 

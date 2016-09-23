@@ -48,16 +48,18 @@
 			<div class="panel panel-default">
 				<div class="row">
 					<div class="col-md-1 col-sm-1 text-center">
-						<div<#if answer.liked?? && answer.liked> class="voted"</#if>>
+						<div class="votebar vote-like<#if answer.liked?? && answer.liked> voted</#if>">
 						
 					 		<a<#if answer.liked?? && !answer.liked> href="#"
-									<#elseif !answer.liked??> href="#"</#if> title="这个答案对我有帮助" class="vote-like"><i class="fa fa-caret-up fa-4x"></i></a>
+									<#elseif !answer.liked??> href="#"</#if> title="这个答案对我有帮助"><i class="fa fa-caret-up fa-2x"></i></a>
 						 	<input type="hidden" value="${answer.id}" />
+						<div>1</div>							
 						</div>
-						<div<#if answer.liked?? && !answer.liked> class="voted"</#if>>
+						
+						<div class="votebar vote-dislike<#if answer.liked?? && !answer.liked> voted</#if>">
 						
 							<a<#if answer.liked?? && answer.liked> href="#"
-									<#elseif !answer.liked??> href="#"</#if> title="这个答案没有任何帮助" class="vote-dislike"><i class="fa fa-caret-down fa-4x"></i></a>
+									<#elseif !answer.liked??> href="#"</#if> title="这个答案没有任何帮助"><i class="fa fa-caret-down fa-2x"></i></a>
 						</div>
 					</div>
 					<div class="panel-body col-md-11">

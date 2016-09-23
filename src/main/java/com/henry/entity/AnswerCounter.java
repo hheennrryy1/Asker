@@ -8,8 +8,16 @@ public class AnswerCounter {
     private Integer likesCount;
 
     private Integer dislikesCount;
+    
+    public AnswerCounter() {};
+    
+    @Override
+	public String toString() {
+		return "AnswerCounter [id=" + id + ", answer=" + answer + ", likesCount=" + likesCount + ", dislikesCount="
+				+ dislikesCount + "]";
+	}
 
-    public Integer getId() {
+	public Integer getId() {
         return id;
     }
 

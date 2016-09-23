@@ -5,6 +5,13 @@
 .answerContent {
 	margin-bottom: 10px;
 }
+.votebar {
+	background-color: #ECF0F1;
+	margin-bottom: 10px;
+}
+.votebar:hover {
+	background-color: #2ECC71;
+}
 .voted {
 	background-color: #2ECC71;
 }

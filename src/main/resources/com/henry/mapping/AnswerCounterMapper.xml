@@ -11,14 +11,29 @@
     <sql id="Base_Column_List">
         id, answer_id, likes_count, dislikes_count
     </sql>
-    
-<!--     <select id="" parameterType="java.lang.Integer" resultType="BaseResultMap">
+   
+    <select id="select" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"></include>
+		from answer_counter
+		where answer_id = #{answer.id, jdbcType=INTEGER}    	
     </select>
- -->
- 	
+    
  	<insert id="insert" parameterType="java.lang.Integer">
  		insert into answer_counter
  		(answer_id)
  		values(#{answer.id, jdbcType=INTEGER})
  	</insert>
+ 	
+ 	<update id="update" parameterType="AnswerCounter">
+ 		update answer_counter
+ 		<set>
+	 		<if test="likesCount != null">
+		 		likes_count = #{likesCount, jdbcType=INTEGER},
+	 		</if>
+	 		<if test="dislikesCount != null">
+	 			dislikes_count = #{dislikesCount, jdbcType=INTEGER},
+	 		</if>
+ 		</set>
+ 		where answer_id = #{answer.id, jdbcType=INTEGER}
+ 	</update>
 </mapper>

@@ -63,7 +63,6 @@ public class UserController {
 		String activeCode = CodeUtil.createActiveCode(user.getEmail());
 		user.setActiveCode(activeCode);
 		userService.insert(user);
-		logger.info(user);
 		
 		//这里发邮件 获取id username
 		//mailService.sendMail(user);
