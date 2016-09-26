@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -18,17 +19,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageInfo;
 import com.henry.entity.Answer;
+import com.henry.entity.AnswerCounter;
 import com.henry.entity.Question;
 import com.henry.entity.QuestionTag;
 import com.henry.entity.Tag;
 import com.henry.entity.User;
 import com.henry.entity.Vote;
 import com.henry.entity.VoteKey;
+import com.henry.service.AnswerCounterService;
 import com.henry.service.AnswerService;
 import com.henry.service.QuestionService;
 import com.henry.service.QuestionTagService;
 import com.henry.service.TagService;
 import com.henry.service.VoteService;
+
+import redis.clients.jedis.Jedis;
 
 @Controller
 @RequestMapping("/question")
@@ -43,6 +48,7 @@ public class QuestionController {
 	private QuestionTagService questagService;
 	private AnswerService answerService;
 	private VoteService voteService;
+	private AnswerCounterService counterService;
 	
 	@Autowired
 	public void setQuesService(QuestionService quesService) {
@@ -64,6 +70,11 @@ public class QuestionController {
 		this.answerService = answerService;
 	}
 	
+	@Autowired
+	public void setCounterService(AnswerCounterService counterService) {
+		this.counterService = counterService;
+	}
+
 	@Autowired
 	public void setVoteService(VoteService voteService) {
 		this.voteService = voteService;
@@ -112,11 +123,17 @@ public class QuestionController {
 		return "index";
 	}
 	
+	int count = 0;
 	//跳到问题页面
 	@RequestMapping("/{questionId}")
-	public ModelAndView question(ModelAndView mav, @PathVariable("questionId") Integer id, @ModelAttribute User user, 
+	public ModelAndView question(ModelAndView mav, @PathVariable("questionId") Integer id, @ModelAttribute User user, HttpServletRequest request,
 									@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
 		boolean answered = false;//判断该用户是否已经回答了
+		
+		count++;
+		//request.getServletContext().setAttribute("count", count);
+		Jedis jedis = new Jedis();
+		jedis.incr("count");
 		
 		Question question = quesService.selectById(id);
 		//不存在这个问题 抛异常
@@ -130,6 +147,11 @@ public class QuestionController {
 		
 		VoteKey key = new VoteKey();
 		for(Answer a : page.getList()) {
+			//获得每个答案的赞同数 这里以后可以service里直接连接表查出赞数反对数 排序 不用new counter
+			AnswerCounter counter = counterService.select(a.getId());
+			a.setLikesCount(counter.getLikesCount());
+			
+			//检测用户是否赞或反对过该答案
 			key.setAnswer(a);
 			key.setUser(user);
 			Vote vote = voteService.select(key);
@@ -137,9 +159,6 @@ public class QuestionController {
 				a.setLiked(vote.getMode());
 			}
 		}
-		
-		page.getList().forEach(a -> logger.info(a.getLiked()));
-		
 		mav.addObject("page", page);
 		//检测用户是否已经回答过问题
 		List<Answer> answers = answerService.selectByQidAndUid(id, user.getId());

@@ -11,6 +11,7 @@
 </@l.htmlHead>
 
 <@l.htmlBody>
+${Application.count}
 	<div class="container" id="main">
 		
 		<div id="question">
@@ -53,7 +54,8 @@
 					 		<a<#if answer.liked?? && !answer.liked> href="#"
 									<#elseif !answer.liked??> href="#"</#if> title="这个答案对我有帮助"><i class="fa fa-caret-up fa-2x"></i></a>
 						 	<input type="hidden" value="${answer.id}" />
-						<div>1</div>							
+						 	
+							<div>${answer.likesCount}</div>							
 						</div>
 						
 						<div class="votebar vote-dislike<#if answer.liked?? && !answer.liked> voted</#if>">

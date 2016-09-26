@@ -10,6 +10,7 @@
 		<config>src/main/resources/SpringMVC.xml</config>
 		<config>src/main/resources/Spring-Mybatis.xml</config>
 		<config>src/main/resources/Spring.xml</config>
+		<config>src/main/resources/Spring-Redis.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
