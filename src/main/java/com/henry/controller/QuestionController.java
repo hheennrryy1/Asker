@@ -26,6 +26,7 @@ import com.henry.entity.Tag;
 import com.henry.entity.User;
 import com.henry.entity.Vote;
 import com.henry.entity.VoteKey;
+import com.henry.redis.service.QuestionCounterService;
 import com.henry.service.AnswerCounterService;
 import com.henry.service.AnswerService;
 import com.henry.service.QuestionService;
@@ -49,6 +50,8 @@ public class QuestionController {
 	private AnswerService answerService;
 	private VoteService voteService;
 	private AnswerCounterService counterService;
+	
+	private QuestionCounterService quesCounterService;
 	
 	@Autowired
 	public void setQuesService(QuestionService quesService) {
@@ -80,6 +83,11 @@ public class QuestionController {
 		this.voteService = voteService;
 	}
 
+	@Autowired
+	public void setQuesCounterService(QuestionCounterService quesCounterService) {
+		this.quesCounterService = quesCounterService;
+	}
+	
 	//跳转到提问页面
 	@RequestMapping(value = "/ask", method = RequestMethod.GET)
 	public String toAsk() {
@@ -113,6 +121,11 @@ public class QuestionController {
 		question.setUser(user);
 		quesService.insert(question);
 		
+		//redis中创建一个计数器
+		quesCounterService.insertHash(question.getId());
+		//redis中创建一个set记录浏览过的用户的id
+		quesCounterService.insertSet(question.getId());
+		
 		//存Question和Tag的关系
 		QuestionTag qt = new QuestionTag();
 		qt.setQuestion(question);
@@ -123,17 +136,11 @@ public class QuestionController {
 		return "index";
 	}
 	
-	int count = 0;
 	//跳到问题页面
 	@RequestMapping("/{questionId}")
-	public ModelAndView question(ModelAndView mav, @PathVariable("questionId") Integer id, @ModelAttribute User user, HttpServletRequest request,
+	public ModelAndView question(ModelAndView mav, @PathVariable("questionId") Integer id, @ModelAttribute User user,
 									@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
 		boolean answered = false;//判断该用户是否已经回答了
-		
-		count++;
-		//request.getServletContext().setAttribute("count", count);
-		Jedis jedis = new Jedis();
-		jedis.incr("count");
 		
 		Question question = quesService.selectById(id);
 		//不存在这个问题 抛异常
@@ -141,6 +148,11 @@ public class QuestionController {
 			throw new NullPointerException();
 		}
 		mav.addObject("question", question);
+		
+		//找到浏览数
+		quesCounterService.incrClickCount(id);
+		Integer count = quesCounterService.getClickCount(id);
+		mav.addObject("count", count);
 		
 		//找到问题下的答案，并分页
 		PageInfo<Answer> page = answerService.selectByQuestionId(id, pageNum, PAGE_SIZE);

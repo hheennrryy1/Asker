@@ -1,4 +1,7 @@
 @CHARSET "UTF-8";
+#tag a {
+	background-color: #ecf0f1;
+}
 .userInfo {
 	background-color: #ecf0f1;
 }
