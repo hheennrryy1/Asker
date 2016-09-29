@@ -122,9 +122,9 @@ public class QuestionController {
 		quesService.insert(question);
 		
 		//redis中创建一个计数器
-		quesCounterService.insertHash(question.getId());
+		quesCounterService.hset(question.getId());
 		//redis中创建一个set记录浏览过的用户的id
-		quesCounterService.insertSet(question.getId());
+		quesCounterService.sadd(question.getId(), null);
 		
 		//存Question和Tag的关系
 		QuestionTag qt = new QuestionTag();
@@ -149,8 +149,12 @@ public class QuestionController {
 		}
 		mav.addObject("question", question);
 		
-		//找到浏览数
-		quesCounterService.incrClickCount(id);
+		boolean isMember = quesCounterService.isMember(id, user.getId());
+		//如果用户没浏览过这个问题，浏览量加一
+		if(!isMember) {
+			quesCounterService.sadd(id, user.getId());
+			quesCounterService.incrClickCount(id);
+		}
 		Integer count = quesCounterService.getClickCount(id);
 		mav.addObject("count", count);
 		
