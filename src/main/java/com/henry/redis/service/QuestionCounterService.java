@@ -27,10 +27,7 @@ public class QuestionCounterService {
 		StringBuilder sb = new StringBuilder("question:");
 		sb.append(questionId);
 		sb.append(":user:click");
-		if(userId!=null) {
-			redisTemplate.opsForSet().add(sb.toString(), userId.toString());
-		}
-		redisTemplate.opsForSet().add(sb.toString(), "");
+		redisTemplate.opsForSet().add(sb.toString(), userId.toString());
 	}
 	
 	//判断用户有没有浏览过某问题

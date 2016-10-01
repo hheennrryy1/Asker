@@ -8,7 +8,7 @@ import com.henry.entity.Answer;
 
 public interface AnswerMapper {
 	
-	Answer selectById(Integer id);
+	Answer selectOneAnswer(@Param(value = "answerId") Integer answerId, @Param(value = "questionId")Integer questionId);
 	
 	List<Answer> selectByIds(@Param(value = "questionId") Integer questionId, @Param(value = "userId")Integer userId);
 	
@@ -18,11 +18,5 @@ public interface AnswerMapper {
 
     int insert(Answer answer);
 
-    int insertSelective(Answer answer);
-
     int updateByIdSelective(Answer answer);
-
-    int updateByIdWithBLOBs(Answer answer);
-
-    int updateById(Answer answer);
 }

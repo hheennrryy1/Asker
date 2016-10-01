@@ -24,6 +24,11 @@ public class AnswerService {
 		return mapper.insert(answer);
 	}
 	
+	//选择单个答案
+	public Answer selectOneAnswer (Integer answerId, Integer questionId) {
+		return mapper.selectOneAnswer(answerId, questionId);
+	}
+	
 	//选择问题的答案，并分页
 	public PageInfo<Answer> selectByQuestionId(Integer questionId, Integer pageNum, int pageSize) {
 		//pageNum,pageSize 每页显示5条

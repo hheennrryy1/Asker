@@ -22,7 +22,9 @@
     
     <!-- 一对多 (将多对多变成两个一对多) 取问题和问题的所有tag -->
     <select id="selectById" resultMap="RelativeResultMap" parameterType="java.lang.Integer" >
-         select q.id as qid, q.title, q.content, q.created_time, u.id as uid, u.username,u.picture, t.id as tid, t.name
+        select q.id as qid, q.title, q.content, q.created_time,
+        u.id as uid, u.username,u.picture,
+        t.id as tid, t.name
         from question q left join question_tag qt on qt.question_id = q.id left join tag t on qt.tag_id = t.id left join user u on u.id = q.user_id
         where q.id = #{id,jdbcType=INTEGER} 
     </select>

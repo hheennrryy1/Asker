@@ -124,7 +124,7 @@ public class QuestionController {
 		//redis中创建一个计数器
 		quesCounterService.hset(question.getId());
 		//redis中创建一个set记录浏览过的用户的id
-		quesCounterService.sadd(question.getId(), null);
+		quesCounterService.sadd(question.getId(), user.getId());
 		
 		//存Question和Tag的关系
 		QuestionTag qt = new QuestionTag();
@@ -176,6 +176,7 @@ public class QuestionController {
 			}
 		}
 		mav.addObject("page", page);
+		
 		//检测用户是否已经回答过问题
 		List<Answer> answers = answerService.selectByQidAndUid(id, user.getId());
 		if(!answers.isEmpty()) { //不空的
@@ -183,6 +184,26 @@ public class QuestionController {
 		}
 		mav.addObject("answered", answered);
 		mav.setViewName("question/question");
+		return mav;
+	}
+	
+	//转向到单独答案的页面
+	@RequestMapping("/{questionId}/answer/{answerId}")
+	public ModelAndView answer(ModelAndView mav, @PathVariable("questionId") Integer questionId, @PathVariable("answerId")Integer answerId) {
+		Question question = quesService.selectById(questionId);
+		//不存在这个问题 抛异常
+		if(question == null) {
+			throw new NullPointerException();
+		}
+		mav.addObject("question", question);
+		
+		Answer answer = answerService.selectOneAnswer(answerId, questionId);
+		if(answer == null) {
+			throw new NullPointerException();
+		}
+		mav.addObject("answer", answer);
+		
+		
 		return mav;
 	}
 }
