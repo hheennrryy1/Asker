@@ -17,11 +17,8 @@ public class Answer {
     //不持久化，作为当前用户是否true赞过，false反对过,null则没点过
     private Boolean liked;
     
-    //不持久化，显示答案的赞同数
-    private int likesCount;
-    
-    //不持久化
-    private int dislikesCount;
+    //计数器 赞同数 反对数
+    private AnswerCounter answerCounter;
     
     public Answer(){};
     
@@ -84,19 +81,11 @@ public class Answer {
 		this.liked = liked;
 	}
 
-	public int getLikesCount() {
-		return likesCount;
+	public AnswerCounter getAnswerCounter() {
+		return answerCounter;
 	}
 
-	public void setLikesCount(int likesCount) {
-		this.likesCount = likesCount;
-	}
-
-	public int getDislikesCount() {
-		return dislikesCount;
-	}
-
-	public void setDislikesCount(int dislikesCount) {
-		this.dislikesCount = dislikesCount;
+	public void setAnswerCounter(AnswerCounter answerCounter) {
+		this.answerCounter = answerCounter;
 	}
 }

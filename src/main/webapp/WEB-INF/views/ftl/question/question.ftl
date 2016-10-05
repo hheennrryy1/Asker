@@ -20,7 +20,6 @@
 				</#list>
 			</div>
 			
-			
 			<div>
 				<h4>${question.title}</h4>
 				
@@ -56,7 +55,7 @@
 									<#elseif !answer.liked??> href="#"</#if> title="这个答案对我有帮助"><i class="fa fa-caret-up fa-2x"></i></a>
 						 	<input type="hidden" value="${answer.id}" />
 						 	
-							<div>${answer.likesCount}</div>							
+							<div>${answer.answerCounter.likesCount}</div>							
 						</div>
 						
 						<div class="votebar vote-dislike<#if answer.liked?? && !answer.liked> voted</#if>">

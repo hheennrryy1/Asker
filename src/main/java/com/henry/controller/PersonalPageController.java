@@ -19,8 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageInfo;
 import com.henry.entity.Answer;
+import com.henry.entity.AnswerCounter;
 import com.henry.entity.Question;
 import com.henry.entity.User;
+import com.henry.service.AnswerCounterService;
 import com.henry.service.AnswerService;
 import com.henry.service.QuestionService;
 import com.henry.service.UserService;
@@ -37,6 +39,7 @@ public class PersonalPageController {
 	private UserService userService;
 	private QuestionService questionService;
 	private AnswerService answerService;
+	private AnswerCounterService answerCounterService;
 	
 	@Autowired
 	public void setUserService(UserService userService) {
@@ -53,6 +56,11 @@ public class PersonalPageController {
 		this.answerService = answerService;
 	}
 	
+	@Autowired
+	public void setAnswerCounterService(AnswerCounterService answerCounterService) {
+		this.answerCounterService = answerCounterService;
+	}
+
 	@ModelAttribute
 	public User getSessionUser(HttpSession session) {
 		return (User) session.getAttribute("user");
@@ -156,6 +164,11 @@ public class PersonalPageController {
 		mav.addObject("personalPageUser", list.get(0));
 		
 		PageInfo<Answer> aPage = answerService.selectByUserId(id, ASKS_PAGE_SIZE);
+		//找到赞同数 和 反对数
+		for(Answer a : aPage.getList()) {
+			AnswerCounter counter = answerCounterService.select(a.getId());
+			a.setAnswerCounter(counter);
+		}
 		mav.addObject("aPage", aPage);
 		
 		mav.setViewName("user/answers");

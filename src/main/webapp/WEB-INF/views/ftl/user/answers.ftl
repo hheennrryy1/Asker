@@ -8,7 +8,7 @@
 				<h6><a href="${path}/question/${answer.question.id}">${answer.question.title}</a></h6>
 				<div class="row">
 					<div class="col-md-1 like text-center">
-						11
+						${answer.answerCounter.likesCount}
 					</div>
 					<div class="col-md-11">
 						<b>${personalPageUser.username!''}</b>

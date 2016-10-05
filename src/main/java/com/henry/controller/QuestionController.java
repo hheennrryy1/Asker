@@ -165,7 +165,7 @@ public class QuestionController {
 		for(Answer a : page.getList()) {
 			//获得每个答案的赞同数 这里以后可以service里直接连接表查出赞数反对数 排序 不用new counter
 			AnswerCounter counter = counterService.select(a.getId());
-			a.setLikesCount(counter.getLikesCount());
+			a.setAnswerCounter(counter);
 			
 			//检测用户是否赞或反对过该答案
 			key.setAnswer(a);
@@ -203,7 +203,7 @@ public class QuestionController {
 		}
 		mav.addObject("answer", answer);
 		
-		
+		mav.setViewName("question/answer");
 		return mav;
 	}
 }
