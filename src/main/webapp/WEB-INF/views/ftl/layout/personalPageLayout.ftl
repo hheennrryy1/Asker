@@ -7,10 +7,10 @@
 				margin-bottom: 0px;
 			}
 			.profile-nav a{
-				font-size: 30px; 
+				font-size: 30px;
 			}
 			.like {
-				background-color: #eff6fa;
+				background-color: #2ECC71;
 			}
 		</style>
 </@l.htmlHead>

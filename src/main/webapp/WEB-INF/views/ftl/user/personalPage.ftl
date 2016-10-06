@@ -8,7 +8,7 @@
 		
 		<div class="panel-body">
 			<#list qPage.list as question>
-				<h5><a href="${path}/question/${question.id}">${question.title}</a></h5>
+				<h6><a href="${path}/question/${question.id}">${question.title}</a></h6>
 			</#list>
 		</div>
 	</div>
@@ -20,8 +20,18 @@
 		
 		<div class="panel-body">
 			<#list aPage.list as answer>
-				<h5><a href="${path}/question/${answer.question.id}">${answer.question.title}</a></h5>
-				${answer.content}
+				<h6><a href="${path}/question/${answer.question.id}">${answer.question.title}</a></h6>
+				
+				<div class="row">
+					<div class="col-md-1 like text-center">
+						${answer.answerCounter.likesCount}
+						<br />赞同
+					</div>
+					<div class="col-md-11">
+						<b>${personalPageUser.username!''}</b>
+						<div>${answer.content}</div>
+					</div>
+				</div>
 			</#list>
 		</div>						
 	</div>

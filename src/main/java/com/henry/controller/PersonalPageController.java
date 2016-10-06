@@ -84,6 +84,12 @@ public class PersonalPageController {
 		mav.addObject("qPage", qPage);
 		
 		PageInfo<Answer> aPage = answerService.selectByUserId(id, PERSONAL_PAGE_SIZE);
+		
+		//找到赞同数 和 反对数
+		for(Answer a : aPage.getList()) {
+			AnswerCounter counter = answerCounterService.select(a.getId());
+			a.setAnswerCounter(counter);
+		}
 		mav.addObject("aPage", aPage);
 		
 		mav.setViewName("user/personalPage");
