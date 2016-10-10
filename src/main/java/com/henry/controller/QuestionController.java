@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -163,7 +162,7 @@ public class QuestionController {
 		
 		VoteKey key = new VoteKey();
 		for(Answer a : page.getList()) {
-			//获得每个答案的赞同数 这里以后可以service里直接连接表查出赞数反对数 排序 不用new counter
+			//获得每个答案的赞同数 这里以后可以service里直接连接表查出赞数反对数 排序
 			AnswerCounter counter = counterService.select(a.getId());
 			a.setAnswerCounter(counter);
 			
@@ -189,7 +188,11 @@ public class QuestionController {
 	
 	//转向到单独答案的页面
 	@RequestMapping("/{questionId}/answer/{answerId}")
-	public ModelAndView answer(ModelAndView mav, @PathVariable("questionId") Integer questionId, @PathVariable("answerId")Integer answerId) {
+	public ModelAndView answer(ModelAndView mav, @PathVariable("questionId") Integer questionId,
+									@PathVariable("answerId")Integer answerId,
+									@ModelAttribute User user) {
+		boolean answered = false;//判断该用户是否已经回答了
+		
 		Question question = quesService.selectById(questionId);
 		//不存在这个问题 抛异常
 		if(question == null) {
@@ -197,11 +200,38 @@ public class QuestionController {
 		}
 		mav.addObject("question", question);
 		
+		boolean isMember = quesCounterService.isMember(questionId, user.getId());
+		//如果用户没浏览过这个问题，浏览量加一
+		if(!isMember) {
+			quesCounterService.sadd(questionId, user.getId());
+			quesCounterService.incrClickCount(questionId);
+		}
+		Integer clickCount = quesCounterService.getClickCount(questionId);
+		mav.addObject("clickCount", clickCount);
+		
+		//选择某个答案
 		Answer answer = answerService.selectOneAnswer(answerId, questionId);
-		if(answer == null) {
-			throw new NullPointerException();
+		
+		VoteKey key = new VoteKey();
+		//获得每个答案的赞同数 这里以后可以service里直接连接表查出赞数反对数 排序 
+		AnswerCounter counter = counterService.select(answer.getId());
+		answer.setAnswerCounter(counter);
+		
+		//检测用户是否赞或反对过该答案
+		key.setAnswer(answer);
+		key.setUser(user);
+		Vote vote = voteService.select(key);
+		if(vote!=null) {
+			answer.setLiked(vote.getMode());
 		}
 		mav.addObject("answer", answer);
+		
+		//检测用户是否已经回答过问题
+		/*List<Answer> answers = answerService.selectByQidAndUid(id, user.getId());
+		if(!answers.isEmpty()) { //不空的
+			answered = true;
+		}
+		mav.addObject("answered", answered);*/
 		
 		mav.setViewName("question/answer");
 		return mav;
