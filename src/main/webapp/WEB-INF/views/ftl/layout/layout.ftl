@@ -29,6 +29,9 @@
 			.panel {
 				padding : 20px 20px;
 			}
+			p {
+				word-wrap:break-word;
+			}			
 		</style>
 		<#nested>
 	</head>

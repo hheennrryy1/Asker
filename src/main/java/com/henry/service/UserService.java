@@ -37,6 +37,10 @@ public class UserService {
 		return mapper.selectUserList(user);
 	}
 	
+	public Integer selectLikesCount(Integer id) {
+		return mapper.selectLikesCount(id);
+	}
+	
 	public int insert(User user) throws UnsupportedEncodingException {
 		String password = user.getPassword();
 		String salt = CodeUtil.generateSalt();

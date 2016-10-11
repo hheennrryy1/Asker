@@ -57,7 +57,7 @@
 			</div>
 			
 			<div>
-				<span>获得<i class="fa fa-thumbs-up"></i>赞同</span>
+				<span>获得&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;${likesCount}&nbsp;赞同</span>
 				<#if isMyself>
 					<span style="float:right;">
 						<a href="${path}/user/edit" class="btn btn-primary">完善我的资料</a>

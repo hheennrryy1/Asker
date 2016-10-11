@@ -34,12 +34,6 @@ public class User implements Serializable {
 
     private String signature;
     
-    
-    /*
-    private List<Comment> comment;
-    private List<Like> likes;
-    */
-    
     public User(){}
 
 	public User(Integer id) {

@@ -35,6 +35,7 @@
         id, username, email, active_code, status, password, salt,
          city, picture, sex, company, position, signature
     </sql>
+    
     <select id="selectUserList" resultMap="BaseResultMap" parameterType="User" >
         select 
         <include refid="Base_Column_List" />
@@ -55,23 +56,17 @@
         </trim>
     </select>
     
+    <!-- 查询该用户的总赞同数 -->
+    <select id="selectLikesCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    	select sum(likes_count) 
+    	from answer_counter ac join answer a on ac.answer_id = a.id
+    	and a.user_id = #{id, jdbcType=INTEGER}
+    </select>
+    
     <delete id="deleteById" parameterType="java.lang.Integer" >
         delete from user
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    
-    <insert id="insert" parameterType="User" >
-		 insert into user (id, username, email, 
-		  active_code, status, password, 
-		  salt, picture, city, 
-		  sex, company, position, 
-		  signature)
-		values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-		  #{activeCode,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{password,jdbcType=VARCHAR}, 
-		  #{salt,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
-		  #{sex,jdbcType=BIT}, #{company,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
-		  #{signature,jdbcType=VARCHAR})
-    </insert>
     
     <insert id="insertSelective" parameterType="User" keyProperty="id" useGeneratedKeys="true">
         insert into user
@@ -206,23 +201,6 @@
 				status = #{status,jdbcType=BIT},
 			</if>
     	</set>
-		where id = #{id,jdbcType=INTEGER}
-    </update>
-    
-    <update id="updateById" parameterType="User" >
-		update user
-		set username = #{username,jdbcType=VARCHAR},
-		email = #{email,jdbcType=VARCHAR},
-		active_code = #{activeCode,jdbcType=VARCHAR},
-		status = #{status,jdbcType=BIT},
-		password = #{password,jdbcType=VARCHAR},
-		salt = #{salt,jdbcType=VARCHAR},
-		picture = #{picture,jdbcType=VARCHAR},
-		city = #{city,jdbcType=VARCHAR},
-		sex = #{sex,jdbcType=BIT},
-		company = #{company,jdbcType=VARCHAR},
-		position = #{position,jdbcType=VARCHAR},
-		signature = #{signature,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

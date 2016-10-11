@@ -33,8 +33,6 @@ import com.henry.service.QuestionTagService;
 import com.henry.service.TagService;
 import com.henry.service.VoteService;
 
-import redis.clients.jedis.Jedis;
-
 @Controller
 @RequestMapping("/question")
 public class QuestionController {
@@ -191,8 +189,6 @@ public class QuestionController {
 	public ModelAndView answer(ModelAndView mav, @PathVariable("questionId") Integer questionId,
 									@PathVariable("answerId")Integer answerId,
 									@ModelAttribute User user) {
-		boolean answered = false;//判断该用户是否已经回答了
-		
 		Question question = quesService.selectById(questionId);
 		//不存在这个问题 抛异常
 		if(question == null) {
@@ -225,13 +221,6 @@ public class QuestionController {
 			answer.setLiked(vote.getMode());
 		}
 		mav.addObject("answer", answer);
-		
-		//检测用户是否已经回答过问题
-		/*List<Answer> answers = answerService.selectByQidAndUid(id, user.getId());
-		if(!answers.isEmpty()) { //不空的
-			answered = true;
-		}
-		mav.addObject("answered", answered);*/
 		
 		mav.setViewName("question/answer");
 		return mav;

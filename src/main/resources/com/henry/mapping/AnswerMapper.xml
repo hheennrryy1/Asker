@@ -11,7 +11,8 @@
 		<association property="user" javaType="User">
      		<id column="uid" property="id" jdbcType="INTEGER"/>
 			<result column="username" property="username" jdbcType="VARCHAR"/>        	
-			<result column="picture" property="picture" jdbcType="VARCHAR"/>        	
+			<result column="picture" property="picture" jdbcType="VARCHAR"/>     
+			<result column="signature" property="signature" jdbcType="VARCHAR"/>   	
 		</association>
 		<association property="question" javaType="Question">
      		<id column="qid" property="id" jdbcType="INTEGER"/>
@@ -19,21 +20,26 @@
 		</association>
 	</resultMap>
 	
-	<sql id="baseSql">
+	<sql id="Sql0">
+		select a.id as aid, a.last_updated, a.content, u.id as uid, u.username, u.picture, u.signature, q.id as qid
+        from answer a join user u on a.user_id = u.id join question q on a.question_id = q.id
+	</sql>
+	<!-- 有无选择签名 -->
+	<sql id="Sql1">
 		select a.id as aid, a.last_updated, a.content, u.id as uid, u.username, u.picture, q.id as qid
         from answer a join user u on a.user_id = u.id join question q on a.question_id = q.id
 	</sql>
 	
 	<!-- 单个答案 -->
     <select id="selectOneAnswer" resultMap="RelativeResultMap" parameterType="java.lang.Integer">
-    	<include refid="baseSql"></include>
+    	<include refid="Sql0"></include>
         where a.id = #{answerId, jdbcType=INTEGER}
         and a.question_id = #{questionId, jdbcType=INTEGER} 
     </select>
     
     <!-- 多对一 取问题下的所有答案 或者 用户的所有答案 或者 判断用户是否曾经回答过某个问题-->
     <select id="selectByIds" resultMap="RelativeResultMap">
-    	<include refid="baseSql"></include>
+    	<include refid="Sql1"></include>
     	<trim prefix="where" prefixOverrides="and">
     		<if test="questionId != null">
 				and a.question_id = #{questionId, jdbcType=INTEGER}

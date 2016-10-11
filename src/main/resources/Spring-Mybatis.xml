@@ -10,6 +10,11 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 	
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="proxyFilters">
+	        <list>
+	            <ref bean="log-filter"/>
+	        </list>
+    	</property>
 		<property name="url" value="jdbc:mysql://127.0.0.1:3306/asker?useUnicode=true&amp;characterEncoding=utf8"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="root"></property>
@@ -34,11 +39,15 @@
 		
 		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
 		<property name="poolPreparedStatements" value="false" />
-		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="-1" />
 		
 		<!-- 配置监控统计拦截的filters -->
-		<property name="filters" value="stat" /> 
+		<property name="filters" value="stat,log4j" /> 
     </bean>
+    
+    <bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
+        <property name="statementExecutableSqlLogEnable" value="true" />
+	</bean>
 	
 	<!-- 创建SqlSessionFactory，同时指定数据源 --> 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

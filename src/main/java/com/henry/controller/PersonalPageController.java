@@ -80,6 +80,9 @@ public class PersonalPageController {
 		List<User> list = userService.selectUserListById(u);
 		mav.addObject("personalPageUser", list.get(0));
 		
+		Integer likesCount = userService.selectLikesCount(id);
+		mav.addObject("likesCount", likesCount);
+		
 		PageInfo<Question> qPage = questionService.selectByUserId(id, PERSONAL_PAGE_SIZE);
 		mav.addObject("qPage", qPage);
 		
