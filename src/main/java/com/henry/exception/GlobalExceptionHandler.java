@@ -15,7 +15,8 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(NullPointerException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public ModelAndView handlerNullPointer() {
+	public ModelAndView handlerNullPointer(Exception e) {
+		e.printStackTrace();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("exception/nullPointerException");
 		return mav;
@@ -24,11 +25,13 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public ModelAndView handlerException(Exception e) {
-		ModelAndView mav = new ModelAndView(); 
-		mav.setViewName("exception/exception");
+		e.printStackTrace();
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("info", "服务器出现错误");
 		if(e instanceof MaxUploadSizeExceededException) {
 			mav.addObject("info", "文件太大，请重试!");
 		}
+		mav.setViewName("exception/exception");
 		return mav;
 	}
 }

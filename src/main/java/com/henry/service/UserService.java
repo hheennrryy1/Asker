@@ -6,10 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.henry.dao.UserMapper;
-import com.henry.entity.Question;
 import com.henry.entity.User;
 import com.henry.utils.CodeUtil;
 
@@ -38,7 +35,8 @@ public class UserService {
 	}
 	
 	public Integer selectLikesCount(Integer id) {
-		return mapper.selectLikesCount(id);
+		Integer i =  mapper.selectLikesCount(id);
+		return i != null ? i : 0;
 	}
 	
 	public int insert(User user) throws UnsupportedEncodingException {

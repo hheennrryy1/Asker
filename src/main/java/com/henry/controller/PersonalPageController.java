@@ -22,6 +22,8 @@ import com.henry.entity.Answer;
 import com.henry.entity.AnswerCounter;
 import com.henry.entity.Question;
 import com.henry.entity.User;
+import com.henry.redis.entity.QuestionCounter;
+import com.henry.redis.service.QuestionCounterService;
 import com.henry.service.AnswerCounterService;
 import com.henry.service.AnswerService;
 import com.henry.service.QuestionService;
@@ -41,6 +43,8 @@ public class PersonalPageController {
 	private AnswerService answerService;
 	private AnswerCounterService answerCounterService;
 	
+	private QuestionCounterService questionCounterService;
+	
 	@Autowired
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -59,6 +63,11 @@ public class PersonalPageController {
 	@Autowired
 	public void setAnswerCounterService(AnswerCounterService answerCounterService) {
 		this.answerCounterService = answerCounterService;
+	}
+	
+	@Autowired
+	public void setQuestionCounterService(QuestionCounterService questionCounterService) {
+		this.questionCounterService = questionCounterService;
 	}
 
 	@ModelAttribute
@@ -84,10 +93,13 @@ public class PersonalPageController {
 		mav.addObject("likesCount", likesCount);
 		
 		PageInfo<Question> qPage = questionService.selectByUserId(id, PERSONAL_PAGE_SIZE);
+		for( Question q : qPage.getList()) {
+			Integer clickCount = questionCounterService.getClickCount(q.getId());
+			q.setQuestionCounter(new QuestionCounter(clickCount));
+		}
 		mav.addObject("qPage", qPage);
 		
 		PageInfo<Answer> aPage = answerService.selectByUserId(id, PERSONAL_PAGE_SIZE);
-		
 		//找到赞同数 和 反对数
 		for(Answer a : aPage.getList()) {
 			AnswerCounter counter = answerCounterService.select(a.getId());
@@ -151,7 +163,14 @@ public class PersonalPageController {
 		List<User> list = userService.selectUserListById(u);
 		mav.addObject("personalPageUser", list.get(0));
 		
+		Integer likesCount = userService.selectLikesCount(id);
+		mav.addObject("likesCount", likesCount);
+		
 		PageInfo<Question> qPage = questionService.selectByUserId(id, ASKS_PAGE_SIZE);
+		for(Question q : qPage.getList()) {
+			Integer clickCount = questionCounterService.getClickCount(q.getId());
+			q.setQuestionCounter(new QuestionCounter(clickCount));
+		}
 		mav.addObject("qPage", qPage);
 		
 		mav.setViewName("user/asks");
@@ -171,6 +190,9 @@ public class PersonalPageController {
 		User u = new User(id);
 		List<User> list = userService.selectUserListById(u);
 		mav.addObject("personalPageUser", list.get(0));
+		
+		Integer likesCount = userService.selectLikesCount(id);
+		mav.addObject("likesCount", likesCount);
 		
 		PageInfo<Answer> aPage = answerService.selectByUserId(id, ASKS_PAGE_SIZE);
 		//找到赞同数 和 反对数

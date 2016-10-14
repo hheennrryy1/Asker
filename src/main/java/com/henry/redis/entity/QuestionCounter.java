@@ -8,6 +8,11 @@ public class QuestionCounter implements Serializable {
 	
 	public QuestionCounter() {}
 
+	public QuestionCounter(int clickCount) {
+		super();
+		this.clickCount = clickCount;
+	}
+
 	public int getClickCount() {
 		return clickCount;
 	}

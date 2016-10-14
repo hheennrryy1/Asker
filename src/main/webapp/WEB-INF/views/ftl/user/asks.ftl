@@ -5,7 +5,15 @@
 		<h5>${personalPageUser.username!''}的提问</h5>
 		<div class="panel-body">
 			<#list qPage.list as question>
-				<h6><a href="${path}/question/${question.id}">${question.title}</a></h6>
+				<div class="row click">
+					<div class="col-md-1 clickCount text-center">
+						${question.questionCounter.clickCount}
+						<br />浏览
+					</div>
+					<div class="col-md-11">
+						<h6><a href="${path}/question/${question.id}">${question.title}</a></h6>
+					</div>
+				</div>
 			</#list>
 		</div>
 	</div>

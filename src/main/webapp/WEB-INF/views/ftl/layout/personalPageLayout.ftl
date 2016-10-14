@@ -12,6 +12,12 @@
 			.like {
 				background-color: #2ECC71;
 			}
+			.click {
+				margin-bottom: 10px;
+			}
+			.clickCount {
+				background-color: #ddd;
+			}
 		</style>
 </@l.htmlHead>
 

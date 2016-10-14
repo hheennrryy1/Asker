@@ -10,11 +10,6 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 	
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<property name="proxyFilters">
-	        <list>
-	            <ref bean="log-filter"/>
-	        </list>
-    	</property>
 		<property name="url" value="jdbc:mysql://127.0.0.1:3306/asker?useUnicode=true&amp;characterEncoding=utf8"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="root"></property>
@@ -42,13 +37,28 @@
 		<property name="maxPoolPreparedStatementPerConnectionSize" value="-1" />
 		
 		<!-- 配置监控统计拦截的filters -->
-		<property name="filters" value="stat,log4j" /> 
+		<property name="proxyFilters">
+	        <list>
+	            <ref bean="log-filter"/>
+	        </list>
+    	</property>
+		<property name="connectionProperties" value="druid.stat.mergeSql=true"></property> 
     </bean>
     
     <bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
-        <property name="statementExecutableSqlLogEnable" value="true" />
+		<property name="statementExecutableSqlLogEnable" value="true" />
+	    <property name="statementCreateAfterLogEnabled" value="false" />
+	    <property name="statementPrepareAfterLogEnabled" value="false" />
+	    <property name="statementPrepareCallAfterLogEnabled" value="false" />
+	    <property name="statementExecuteAfterLogEnabled" value="false" />
+	    <property name="statementExecuteQueryAfterLogEnabled" value="false" />
+	    <property name="statementExecuteUpdateAfterLogEnabled" value="false" />
+	    <property name="statementExecuteBatchAfterLogEnabled" value="false" />
+	    <property name="statementCloseAfterLogEnabled" value="false" />
+	    <property name="statementParameterClearLogEnable" value="false" />
+	    <property name="statementParameterSetLogEnabled" value="false" />
 	</bean>
-	
+    
 	<!-- 创建SqlSessionFactory，同时指定数据源 --> 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- 数据库连接池 -->
@@ -82,7 +92,7 @@
 	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="add*" propagation="REQUIRED" />
-			<tx:method name="append*" propagation="REQUIRED" />
+			<tx:method name="select*" propagation="REQUIRED" read-only="true"/>
 			<tx:method name="insert*" propagation="REQUIRED" />
 			<tx:method name="save*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
@@ -90,13 +100,10 @@
 			<tx:method name="edit*" propagation="REQUIRED" />
 			<tx:method name="delete*" propagation="REQUIRED" />
 			<tx:method name="remove*" propagation="REQUIRED" />
-			<tx:method name="repair" propagation="REQUIRED" />
-			<tx:method name="delAndRepair" propagation="REQUIRED" />
 			<tx:method name="get*" propagation="SUPPORTS" />
 			<tx:method name="find*" propagation="SUPPORTS" />
 			<tx:method name="load*" propagation="SUPPORTS" />
 			<tx:method name="search*" propagation="SUPPORTS" />
-			<tx:method name="datagrid*" propagation="SUPPORTS" />
 			<tx:method name="*" propagation="SUPPORTS" />
 		</tx:attributes>
 	</tx:advice>

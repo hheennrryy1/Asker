@@ -3,6 +3,8 @@ package com.henry.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.henry.redis.entity.QuestionCounter;
+
 public class Question {
 	private Integer id;
 
@@ -15,6 +17,8 @@ public class Question {
     private String content;
     
     private List<Tag> tags;
+    
+    private QuestionCounter questionCounter;
     
     public Question(){};
     
@@ -64,5 +68,13 @@ public class Question {
 
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
+	}
+
+	public QuestionCounter getQuestionCounter() {
+		return questionCounter;
+	}
+
+	public void setQuestionCounter(QuestionCounter questionCounter) {
+		this.questionCounter = questionCounter;
 	}
 }
