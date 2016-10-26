@@ -78,7 +78,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">撰写 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="${path}/question/ask">提问题</a></li>
-                                <li><a href="#">写文章</a></li>
+                                <li><a href="${path}/article/write">写文章</a></li>
                                 <li><a href="#">记笔记</a></li>
                             </ul>
                         </li>

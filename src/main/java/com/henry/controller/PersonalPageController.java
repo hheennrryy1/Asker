@@ -205,4 +205,22 @@ public class PersonalPageController {
 		mav.setViewName("user/answers");
 		return mav;
 	}
+	
+	//转向到查看用户所有文章页面，先准备数据
+	@RequestMapping("/{uid}/articles")
+	public ModelAndView articles(@PathVariable("uid") Integer id, ModelAndView mav, @ModelAttribute User user) {
+		boolean isMyself = false;
+		if(user.getId().equals(id)) {
+			isMyself = true;
+		}
+		//判断是不是用户自己进入个人主页
+		mav.addObject("isMyself", isMyself);
+		
+		User u = new User(id);
+		List<User> list = userService.selectUserListById(u);
+		mav.addObject("personalPageUser", list.get(0));
+		
+		mav.setViewName("user/articles");
+		return mav;
+	}
 }
