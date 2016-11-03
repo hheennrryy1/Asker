@@ -18,6 +18,9 @@
 					</div>
 				</div>
 			</#list>
+			<#if aPage.list?size == 0 >
+				暂时没有回答
+			</#if>
 		</div>
 	</div>
 </@l.info>

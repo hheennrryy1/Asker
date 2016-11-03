@@ -1,5 +1,7 @@
 package com.henry.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +20,9 @@ public class ColumnsService {
 
 	public int insert(Columns columns) {
 		return mapper.insert(columns); 
+	}
+	
+	public List<Columns> selectByUserId(Integer userId) {
+		return mapper.selectByUserId(userId);
 	}
 }

@@ -20,12 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageInfo;
 import com.henry.entity.Answer;
 import com.henry.entity.AnswerCounter;
+import com.henry.entity.Columns;
 import com.henry.entity.Question;
 import com.henry.entity.User;
 import com.henry.redis.entity.QuestionCounter;
 import com.henry.redis.service.QuestionCounterService;
 import com.henry.service.AnswerCounterService;
 import com.henry.service.AnswerService;
+import com.henry.service.ColumnsService;
 import com.henry.service.QuestionService;
 import com.henry.service.UserService;
 
@@ -42,6 +44,7 @@ public class PersonalPageController {
 	private QuestionService questionService;
 	private AnswerService answerService;
 	private AnswerCounterService answerCounterService;
+	private ColumnsService columnsService; 
 	
 	private QuestionCounterService questionCounterService;
 	
@@ -68,6 +71,11 @@ public class PersonalPageController {
 	@Autowired
 	public void setQuestionCounterService(QuestionCounterService questionCounterService) {
 		this.questionCounterService = questionCounterService;
+	}
+	
+	@Autowired
+	public void setColumnsService(ColumnsService columnsService) {
+		this.columnsService = columnsService;
 	}
 
 	@ModelAttribute
@@ -219,6 +227,8 @@ public class PersonalPageController {
 		User u = new User(id);
 		List<User> list = userService.selectUserListById(u);
 		mav.addObject("personalPageUser", list.get(0));
+		
+		List<Columns> columns = columnsService.selectByUserId(user.getId());
 		
 		mav.setViewName("user/articles");
 		return mav;

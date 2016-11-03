@@ -15,6 +15,9 @@
 					</div>
 				</div>
 			</#list>
+			<#if qPage.list?size == 0 >
+				暂时没有提问
+			</#if>
 		</div>
 	</div>
 </@l.info>

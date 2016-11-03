@@ -14,7 +14,7 @@ $(document).ready(function() {
 		$("#tags").hide();
 	});	               
 
-	$("#tagsInputDiv").click(function(event){
+	$("#tagsInputDiv").click(function(event) {
 		event.stopPropagation();
 		$("#tags").show();
 	});
@@ -23,7 +23,7 @@ $(document).ready(function() {
 		event.stopPropagation();
 	});
 	
-	$("#tagsField a").click(function(){
+	$("#tagsField a").click(function() {
 		event.stopPropagation();
 		var tagContentId = $(this).attr("href");
 		$(tagContentId).siblings().hide();
@@ -31,7 +31,7 @@ $(document).ready(function() {
 	});
 	
 	
-	$(".tagPanel a").click(function(){
+	$(".tagPanel a").click(function() {
 		var tag = $(this).text();
 		var tagInput = $("#tagStr");
 		

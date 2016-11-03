@@ -1,8 +1,14 @@
 <#import "*/layout/layout.ftl" as l>
+<#import "*/layout/tagLayout.ftl" as t>
 
 <@l.htmlHead "创建专栏 - Asker">
 		<link rel="stylesheet" href="${path}/css/public/jquery.tagsinput.min.css" />
-		<script src="${path}/js/public/jquery.tagsinput.min.js"></script>
+		
+		<#--
+		<link rel="stylesheet" href="${path}/css/my/columns/create.css" />
+		<script src="${path}/js/my/columns/create.js"></script>
+		<script src="${path}/js/public/jquery.tagsinput.min.js"></script> 
+		-->
 </@l.htmlHead>
 
 <@l.htmlBody>
@@ -14,15 +20,19 @@
 					<div class="form-group">
 						<label for="title" class="col-md-2 control-label"><b>专栏名称</b></label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="title" name="title" placeholder="专栏名称" maxlength="50">
+							<input type="text" class="form-control" id="title" name="title" placeholder="专栏名称" maxlength="50" required="required"/>
 						</div>
 					</div>
-					<div class="form-group">
-						<label for="title" class="col-md-2 control-label"><b>专栏名称</b></label>
-						<div class="col-md-8">
-							<input type="text" class="form-control" id="title" name="title" placeholder="专栏名称" maxlength="50">
+					
+					<#-- <div class="form-group">
+						<label for="tagStr" class="col-md-2 control-label"><b>标签</b></label>
+						<div class="col-md-8" id="tagsInputDiv">
+							<input type="text" id="tagStr" name="tagStr" required="required"/>
 						</div>
 					</div>
+					
+					<@t.tag></@t.tag> -->
+					
 					<div class="form-group">
 						<label for="summary" class="col-md-2 control-label"><b>专栏简介</b></label>
 						<div class="col-md-8">
