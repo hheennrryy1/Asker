@@ -228,8 +228,8 @@ public class PersonalPageController {
 		List<User> list = userService.selectUserListById(u);
 		mav.addObject("personalPageUser", list.get(0));
 		
-		List<Columns> columns = columnsService.selectByUserId(user.getId());
-		
+		List<Columns> columnsList = columnsService.selectByUserId(user.getId());
+		mav.addObject("columns", columnsList);
 		mav.setViewName("user/articles");
 		return mav;
 	}

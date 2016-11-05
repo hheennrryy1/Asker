@@ -25,4 +25,8 @@ public class ColumnsService {
 	public List<Columns> selectByUserId(Integer userId) {
 		return mapper.selectByUserId(userId);
 	}
+	
+	public Columns selectById(Integer id) {
+		return mapper.selectById(id);
+	}
 }
