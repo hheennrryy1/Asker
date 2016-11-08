@@ -105,7 +105,6 @@ public class UserController {
 			session.setMaxInactiveInterval(60*60);//session一小时有效
 			session.setAttribute("user", user);
 		}
-		logger.info(user);
 		return flag;
 	}
 	

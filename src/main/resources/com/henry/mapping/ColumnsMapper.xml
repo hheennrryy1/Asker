@@ -2,23 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.henry.dao.ColumnsMapper">
 	<resultMap id="BaseResultMap" type="Columns">
-		<id column="id" property="id" jdbcType="INTEGER" />
+		<id column="cid" property="id" jdbcType="INTEGER" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
 		<result column="summary" property="summary" jdbcType="VARCHAR" />
 		<association property="user" javaType="User">
 			<result column="uid" property="id" jdbcType="INTEGER" />
+			<result column="username" property="username" jdbcType="VARCHAR" />
+			<result column="picture" property="picture" jdbcType="VARCHAR" />
 		</association>
 	</resultMap>
 	
 	<sql id="Base_Column_List">
-		id, title, summary, user_id
+		id as cid, title, summary, user_id
 	</sql>
 	
 	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
-		<include refid="Base_Column_List" />
-		from columns
-		where id = #{id, jdbcType=INTEGER}
+		c.id as cid, c.title, c.summary, u.id as uid, u.username, u.picture
+		from columns c, user u
+		where u.id = c.user_id and c.id = #{id, jdbcType=INTEGER}
 	</select>
 	
 	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -44,14 +46,8 @@
 	
 	<update id="updateByIdSelective" parameterType="Columns">
 		update columns
-		<set>
-			<if test="title != null">
-				title = #{title, jdbcType=VARCHAR},
-			</if>
-			<if test="summary != null">
-				summary = #{summary, jdbcType=VARCHAR},
-			</if>
-		</set>
+		set title = #{title, jdbcType=VARCHAR},
+		summary = #{summary, jdbcType=VARCHAR}
 		where id = #{id, jdbcType=INTEGER}
 	</update>
 </mapper>

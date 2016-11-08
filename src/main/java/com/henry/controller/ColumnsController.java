@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.henry.entity.Columns;
 import com.henry.entity.User;
@@ -54,10 +55,36 @@ public class ColumnsController {
 	}
 	
 	//转向到具体的专栏的页面
-	@RequestMapping("/{id}")
-	public String columns(@PathVariable Integer id) {
-		Columns c = columnsService.selectById(id);
-		logger.info(c);
-		return null;
+	@RequestMapping("/{cid}")
+	public ModelAndView columns(ModelAndView mav, @PathVariable("cid") Integer id, @ModelAttribute User user) {
+		Columns columns = columnsService.selectById(id);
+		boolean isMyself = false;
+		//判断是不是本人进入该专栏
+		if(columns.getUser().getId().equals(user.getId())) {
+			isMyself = true;
+		}
+		mav.addObject("columns", columns);
+		mav.addObject("isMyself", isMyself);
+		mav.setViewName("columns/columns");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/{cid}/update", method = RequestMethod.GET)
+	public ModelAndView toUpdate(ModelAndView mav, @PathVariable("cid") Integer id, @ModelAttribute User user) {
+		Columns columns = columnsService.selectById(id);
+		
+		//判断是不是本人进入专栏设置页面，不是的话没反应
+		if(!columns.getUser().getId().equals(user.getId())) {
+			return null;
+		}
+		mav.addObject("columns", columns);
+		mav.setViewName("columns/update");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(Columns columns) {
+		columnsService.updateByIdSelective(columns);
+		return "redirect:/columns/" + columns.getId();
 	}
 }

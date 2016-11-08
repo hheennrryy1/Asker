@@ -29,4 +29,8 @@ public class ColumnsService {
 	public Columns selectById(Integer id) {
 		return mapper.selectById(id);
 	}
+	
+	public int updateByIdSelective(Columns columns) {
+		return mapper.updateByIdSelective(columns);
+	}
 }
