@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.henry.entity.Columns;
 import com.henry.entity.User;
 import com.henry.service.ColumnsService;
-import com.henry.service.TagService;
 
 @Controller
 @RequestMapping("/columns")
@@ -23,18 +22,12 @@ public class ColumnsController {
 	Logger logger = Logger.getLogger(ColumnsController.class);
 	
 	private ColumnsService columnsService;
-	private TagService tagService;
 	
 	@Autowired
 	public void setColumnsService(ColumnsService columnsService) {
 		this.columnsService = columnsService;
 	}
 	
-	@Autowired
-	public void setTagService(TagService tagService) {
-		this.tagService = tagService;
-	}
-
 	@ModelAttribute
 	public User getUser(HttpSession session) {
 		return (User) session.getAttribute("user");

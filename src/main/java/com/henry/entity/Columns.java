@@ -1,5 +1,7 @@
 package com.henry.entity;
 
+import java.util.List;
+
 public class Columns {
 	
     private Integer id;
@@ -9,6 +11,8 @@ public class Columns {
     private String summary;
     
     private User user;
+    
+    private List<Article> articles;
     
     public Columns() {}
 
@@ -42,5 +46,13 @@ public class Columns {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Article> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
 	}
 }

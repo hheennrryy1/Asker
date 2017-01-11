@@ -13,10 +13,12 @@
 			</div>
 			
 			<div class="row">
-				<div class="col-md-offset-8 col-md-4">
-					<#if isMyself>
+				<#if isMyself>
+					<div class="col-md-8">
 						<div><a href="${path}/columns/${columns.id}/update"><i class="fa fa-cog"></i>专栏设置</a></div>
-					</#if>
+					</div>
+				</#if>
+				<div class="col-md-offset-8 col-md-4">
 					<div><b>作者</b></div>
 					<div>
 						<img src="${columns.user.picture!'/picture/default.png'}" alt="${columns.user.username!'avatar'}" width="36" height="36"/>
@@ -26,6 +28,6 @@
 			</div>
 		</div>
 		
-		<a href="">写文章</a>
+		<a href="${path}/article/write" class="btn btn-primary">写文章</a>		
 	</div>
 </@l.htmlBody>
