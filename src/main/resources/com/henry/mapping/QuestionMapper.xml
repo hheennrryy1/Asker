@@ -47,61 +47,17 @@
             #{user.id,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
     </insert>
     
-    <insert id="insertSelective" parameterType="Question" keyProperty="id" useGeneratedKeys="true">
-        insert into question
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                id,
-            </if>
-            <if test="title != null" >
-                title,
-            </if>
-            <if test="createdTime != null" >
-                created_time,
-            </if>
-            <if test="user != null">
-	            <if test="user.id != null" >
-	                user_id,
-	            </if>
-            </if>
-            <if test="content != null" >
-                content,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="title != null" >
-                #{title,jdbcType=VARCHAR},
-            </if>
-            <if test="createdTime != null" >
-                #{createdTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="user != null">
-	            <if test="user.id != null" >
-	                #{user.id,jdbcType=VARCHAR},
-	            </if>
-            </if>
-            <if test="content != null" >
-                #{content,jdbcType=LONGVARCHAR},
-            </if>
-        </trim>
-    </insert>
-    
     <update id="updateByIdSelective" parameterType="Question" >
         update question
-        <set >
+        <set>
             <if test="title != null" >
                 title = #{title,jdbcType=VARCHAR},
             </if>
             <if test="createdTime != null" >
                 created_time = #{createdTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="user != null">
-	            <if test="user.id != null" >
-	                user_id = #{user.id,jdbcType=VARCHAR},
-	            </if>
+            <if test="user != null and user.id != null">
+	        	user_id = #{user.id,jdbcType=VARCHAR},
             </if>
             <if test="content != null" >
                 content = #{content,jdbcType=LONGVARCHAR},
@@ -109,22 +65,4 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    
-    <update id="updateByIdWithBLOBs" parameterType="Question" >
-        update question
-        set title = #{title,jdbcType=VARCHAR},
-            created_time = #{createdTime,jdbcType=TIMESTAMP},
-            user_id = #{user.id,jdbcType=VARCHAR},
-            content = #{content,jdbcType=LONGVARCHAR}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    
-    <update id="updateById" parameterType="Question" >
-        update question
-        set title = #{title,jdbcType=VARCHAR},
-            created_time = #{createdTime,jdbcType=TIMESTAMP},
-            user_id = #{user.id,jdbcType=VARCHAR}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    
 </mapper>

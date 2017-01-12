@@ -13,11 +13,5 @@ public interface QuestionMapper {
 
     int insert(Question question);
 
-    int insertSelective(Question question);
-
     int updateByIdSelective(Question question);
-
-    int updateByIdWithBLOBs(Question question);
-
-    int updateById(Question question);
 }
