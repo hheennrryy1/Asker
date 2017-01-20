@@ -1,6 +1,7 @@
 package com.henry.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Article {
 	
@@ -15,6 +16,8 @@ public class Article {
     private Columns columns;
     
     private User user;
+    
+    private List<Tag> tags;
 
     public Integer getId() {
         return id;
@@ -62,5 +65,13 @@ public class Article {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 }

@@ -12,6 +12,8 @@ public class Tag {
     
     private List<Question> questions;
     
+    private List<Article> articles;
+    
     public Tag() {};
 
     public Tag(String name) {
@@ -49,5 +51,13 @@ public class Tag {
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+
+	public List<Article> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
 	}
 }
