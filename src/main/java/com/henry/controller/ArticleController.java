@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.helpers.SyslogWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.alibaba.druid.pool.vendor.SybaseExceptionSorter;
 import com.henry.entity.Article;
+import com.henry.entity.ArticleTag;
 import com.henry.entity.Tag;
+import com.henry.service.ArticleTagService;
 import com.henry.service.TagService;
 
 @Controller
@@ -22,17 +22,23 @@ public class ArticleController {
 	Logger logger = Logger.getLogger(ArticleController.class);
 	
 	private TagService tagService;
+	private ArticleTagService articleTagService;
 	
 	@Autowired
 	public void setTagService(TagService tagService) {
 		this.tagService = tagService;
+	}
+	
+	@Autowired
+	public void setArticleTagService(ArticleTagService articleTagService) {
+		this.articleTagService = articleTagService;
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String toWrite() {
 		return "article/write";
 	}
-	
+
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write(Article article, String tagStr) {
 		String []tagsName = tagStr.split(",");
@@ -50,7 +56,11 @@ public class ArticleController {
 			tags.add(tag);
 		}
 		
-		
+		ArticleTag at = new ArticleTag();
+		at.setArticle(article);
+		at.setTag(tags.get(0));
+		//do something
+		articleTagService.insert(at);
 		return "article/write";
 	}
 }

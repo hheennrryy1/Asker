@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.henry.dao.articleTagMapper" >
-    <resultMap id="BaseResultMap" type="articleTag" >
+<mapper namespace="com.henry.dao.ArticleTagMapper" >
+    <resultMap id="BaseResultMap" type="ArticleTag" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="article_id" property="article.id" jdbcType="INTEGER" />
         <result column="tag_id" property="tag.id" jdbcType="INTEGER" />
@@ -10,37 +10,11 @@
     <sql id="Base_Column_List" >
         id, article_id, tag_id
     </sql>
-    
-    <insert id="insert" parameterType="articleTag" >
-        insert into article_tag (id, article_id, tag_id
+	
+	<insert id="insert">
+		insert into article_tag (id, article_id, tag_id
             )
-        values (#{id,jdbcType=INTEGER}, #{article.id,jdbcType=INTEGER}, #{tag.id,jdbcType=INTEGER}
+        values (#{id, jdbcType=INTEGER}, #{article.id, jdbcType=INTEGER}, #{tag.id, jdbcType=INTEGER}
             )
-    </insert>
-    
-    <insert id="insertSelective" parameterType="articleTag" >
-        insert into article_tag
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                id,
-            </if>
-            <if test="article.id != null" >
-                article_id,
-            </if>
-            <if test="tag.id != null" >
-                tag_id,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="article.id != null" >
-                #{article.id,jdbcType=INTEGER},
-            </if>
-            <if test="tag.id != null" >
-                #{tag.id,jdbcType=INTEGER},
-            </if>
-        </trim>
-    </insert>
+	</insert>    
 </mapper>
