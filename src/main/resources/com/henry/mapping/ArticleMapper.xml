@@ -19,7 +19,7 @@
 	        </association> 
         </resultMap>
         
-	<insert id="insert" parameterType="Article">
+	<insert id="insert" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
 		insert into article
 		(title, content, created_time, columns_id, user_id)
 		values (#{title, jdbcType=VARCHAR}, #{content, jdbcType=LONGVARCHAR}, #{createdTime, jdbcType=TIMESTAMP},

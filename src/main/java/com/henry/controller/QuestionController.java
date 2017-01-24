@@ -92,7 +92,7 @@ public class QuestionController {
 	}
 
 	@ModelAttribute
-	public User getSessionUser(HttpSession session) {
+	public User getUser(HttpSession session) {
 		return (User) session.getAttribute("user");
 	}
 	
