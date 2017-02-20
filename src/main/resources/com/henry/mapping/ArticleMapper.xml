@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.henry.dao.ArticleMapper">
         <resultMap id="BaseResultMap" type="Article">
-	        <id column="id" jdbcType="INTEGER" property="id" />
+	        <id column="aid" jdbcType="INTEGER" property="id" />
 	        <result column="title" jdbcType="VARCHAR" property="title" />
 	        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
 	        <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -17,6 +17,7 @@
 	        <association property="columns" javaType="Columns">
 	        	<id column="cid" property="id" jdbcType="INTEGER"/>
 	        </association> 
+	        <!-- 加collection -->
         </resultMap>
         
 	<insert id="insert" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
@@ -25,4 +26,11 @@
 		values (#{title, jdbcType=VARCHAR}, #{content, jdbcType=LONGVARCHAR}, #{createdTime, jdbcType=TIMESTAMP},
 		#{columns.id, jdbcType=INTEGER}, #{user.id, jdbcType=INTEGER})
 	</insert>
+	
+	<!-- <select id="selectByTime" resultMap="RelativeResultMap">
+	 	select a.id as aid, a.title 
+		t.id as tid, t.name
+        from article a left join article_tag at on at.article_id = a.id left join tag t on at.tag_id = t.id
+        order by created_time desc limit 0,20
+	</select> -->
 </mapper>

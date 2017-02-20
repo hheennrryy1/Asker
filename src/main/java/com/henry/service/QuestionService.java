@@ -31,6 +31,10 @@ public class QuestionService {
 		return page;
 	}
 	
+	public List<Question> selectByTime() {
+		return mapper.selectByTime();
+	}
+	
 	public int insert(Question question) {
     	return mapper.insert(question);
     }

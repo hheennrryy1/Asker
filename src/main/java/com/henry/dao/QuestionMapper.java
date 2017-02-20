@@ -9,6 +9,8 @@ public interface QuestionMapper {
 	
 	List<Question> selectByUserId(Integer userId);
 	
+	List<Question> selectByTime();
+	
     int deleteById(Integer id);
 
     int insert(Question question);
