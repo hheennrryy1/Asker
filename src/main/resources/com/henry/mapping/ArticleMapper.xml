@@ -3,7 +3,7 @@
 <mapper namespace="com.henry.dao.ArticleMapper">
         <resultMap id="BaseResultMap" type="Article">
 	        <id column="aid" jdbcType="INTEGER" property="id" />
-	        <result column="title" jdbcType="VARCHAR" property="title" />
+	        <result column="atitle" jdbcType="VARCHAR" property="title" />
 	        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
 	        <result column="content" jdbcType="LONGVARCHAR" property="content" />
         </resultMap>
@@ -14,10 +14,16 @@
 	        	<result column="username" property="username" jdbcType="VARCHAR" />
 	        	<result column="picture" property="picture" jdbcType="VARCHAR" />
 	        </association>
+	        
 	        <association property="columns" javaType="Columns">
 	        	<id column="cid" property="id" jdbcType="INTEGER"/>
-	        </association> 
-	        <!-- 加collection -->
+	        	<result column="ctitle" property="title" jdbcType="VARCHAR"/>
+	        </association>
+	         
+	        <collection property="tags" ofType="Tag">
+	        	<id column="tid" property="id" jdbcType="INTEGER"/>
+	        	<result column="name" property="name" jdbcType="VARCHAR"/>
+	        </collection>
         </resultMap>
         
 	<insert id="insert" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
@@ -27,10 +33,23 @@
 		#{columns.id, jdbcType=INTEGER}, #{user.id, jdbcType=INTEGER})
 	</insert>
 	
-	<!-- <select id="selectByTime" resultMap="RelativeResultMap">
-	 	select a.id as aid, a.title 
+	<select id="selectById" resultMap="RelativeResultMap" parameterType="INTEGER">
+		select a.id as aid, a.title as atitle,
+		u.id as uid, u.username,
+		c.id as cid, c.title,
+		t.id as tid, t.name
+		from article a 
+		join user u on a.user_id = u.id 
+		join columns c on a.columns_id = c.id 
+		join article_tag at on at.article_id = a.id 
+		join tag t on at.tag_id = t.id 
+		where a.id = #{id, jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByTime" resultMap="RelativeResultMap">
+	 	select a.id as aid, a.title as atitle, 
 		t.id as tid, t.name
         from article a left join article_tag at on at.article_id = a.id left join tag t on at.tag_id = t.id
         order by created_time desc limit 0,20
-	</select> -->
+	</select>
 </mapper>

@@ -34,12 +34,12 @@
 		
 		<div class="panel panel-info">
 			<div class="panel-heading">最新文章</div>
-			<#list questions as q>
+			<#list articles as a>
 				<div id="question">
 					<div>
-						<a href="${path}/question/1?pageNum=1">${q.title}</a>
+						<a href="">${a.title}</a>
 						<span id="tags">
-							<#list q.tags as tag>
+							<#list a.tags as tag>
 								<a href="">${tag.name}</a>
 							</#list>
 						</span>

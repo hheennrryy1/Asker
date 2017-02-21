@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -104,5 +105,15 @@ public class ArticleController {
 		}
 		
 		return "article/write";
+	}
+	
+	@RequestMapping("/{articleId}")
+	public ModelAndView article(@PathVariable Integer id, ModelAndView mav) {
+		articleService.selectById(id);
+		Article article = articleService.selectById(id);
+		mav.addObject("article", article);
+		//写view
+		mav.setViewName("article/article");
+		return mav;
 	}
 }

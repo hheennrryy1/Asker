@@ -10,4 +10,6 @@ public interface ArticleMapper {
 	
 	List<Article> selectByTime();
 	
+	Article selectById(Integer id);
+	
 }

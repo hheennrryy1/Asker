@@ -1,5 +1,7 @@
 package com.henry.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +20,13 @@ public class ArticleService {
 	
 	public int insert(Article article) {
 		return mapper.insert(article);
+	}
+	
+	public List<Article> selectByTime() {
+		return mapper.selectByTime();
+	}
+	
+	public Article selectById(Integer id) {
+		return mapper.selectById(id);
 	}
 }

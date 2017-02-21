@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.henry.entity.Article;
 import com.henry.entity.Question;
 import com.henry.service.ArticleService;
 import com.henry.service.QuestionService;
@@ -32,6 +33,8 @@ public class JumpController {
 	public ModelAndView toIndex(ModelAndView mav) {
 		List<Question> questions = questionService.selectByTime();
 		mav.addObject("questions", questions);
+		List<Article> articles = articleService.selectByTime();
+		mav.addObject("articles", articles);
 		mav.setViewName("index");
 		return mav;
 	}
