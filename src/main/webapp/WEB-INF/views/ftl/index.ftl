@@ -9,7 +9,7 @@
 			background-color: #ECF0F1;
 		}
 		#tags a {
-			color: #3498DB;
+			color: #1ABC9C;
 		}
 	</style>
 </@l.htmlHead>
@@ -37,10 +37,10 @@
 			<#list articles as a>
 				<div id="question">
 					<div>
-						<a href="">${a.title}</a>
+						<a href="${path}/article/${a.id}">${a.title}</a>
 						<span id="tags">
 							<#list a.tags as tag>
-								<a href="">${tag.name}</a>
+								<a href="#">${tag.name}</a>
 							</#list>
 						</span>
 					</div>

@@ -32,6 +32,9 @@
 			p {
 				word-wrap:break-word;
 			}			
+			a {
+				color: #2980B9;
+			}
 		</style>
 		<#nested>
 	</head>

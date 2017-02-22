@@ -27,7 +27,8 @@
 				</div>
 			</div>
 		</div>
-		
-		<a href="${path}/article/write" class="btn btn-primary">写文章</a>		
+		<#if isMyself>
+			<a href="${path}/article/write" class="btn btn-primary">写文章</a>		
+		</#if>
 	</div>
 </@l.htmlBody>

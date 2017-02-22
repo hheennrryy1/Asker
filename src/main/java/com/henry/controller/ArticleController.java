@@ -108,9 +108,9 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/{articleId}")
-	public ModelAndView article(@PathVariable Integer id, ModelAndView mav) {
-		articleService.selectById(id);
-		Article article = articleService.selectById(id);
+	public ModelAndView article(@PathVariable Integer articleId, ModelAndView mav) {
+		articleService.selectById(articleId);
+		Article article = articleService.selectById(articleId);
 		mav.addObject("article", article);
 		//写view
 		mav.setViewName("article/article");

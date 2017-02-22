@@ -34,16 +34,18 @@
 	</insert>
 	
 	<select id="selectById" resultMap="RelativeResultMap" parameterType="INTEGER">
-		select a.id as aid, a.title as atitle,
-		u.id as uid, u.username,
-		c.id as cid, c.title,
+		select a.id as aid, a.title as atitle, a.content, a.created_time,
+		u.id as uid, u.username, u.picture,
+		c.id as cid, c.title as ctitle,
 		t.id as tid, t.name
-		from article a 
+		from article a
 		join user u on a.user_id = u.id 
 		join columns c on a.columns_id = c.id 
 		join article_tag at on at.article_id = a.id 
 		join tag t on at.tag_id = t.id 
 		where a.id = #{id, jdbcType=INTEGER}
+		order by created_time desc
+		limit 0,20
 	</select>
 	
 	<select id="selectByTime" resultMap="RelativeResultMap">
