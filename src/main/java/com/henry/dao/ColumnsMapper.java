@@ -14,4 +14,6 @@ public interface ColumnsMapper {
     List<Columns> selectByUserId(Integer userId);
 
     int updateByIdSelective(Columns columns);
+    
+    Columns selecyByColumnsId(Integer id);
 }

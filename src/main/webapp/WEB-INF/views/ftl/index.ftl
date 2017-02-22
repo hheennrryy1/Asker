@@ -2,13 +2,16 @@
 
 <@l.htmlHead "首页 - Asker">
 	<style>
-		#question {
+		.question {
 			margin-top: 10px;
 		}
-		#tags {
+		.article {
+			margin-top: 10px;
+		}
+		.tags {
 			background-color: #ECF0F1;
 		}
-		#tags a {
+		.tags a {
 			color: #1ABC9C;
 		}
 	</style>
@@ -19,10 +22,10 @@
 		<div class="panel panel-success">
 			<div class="panel-heading">最新提问</div>
 			<#list questions as q>
-				<div id="question">
+				<div class="question">
 					<div>
 						<a href="${path}/question/1?pageNum=1">${q.title}</a>
-						<span id="tags">
+						<span class="tags">
 							<#list q.tags as tag>
 								<a href="">${tag.name}</a>
 							</#list>
@@ -35,10 +38,10 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">最新文章</div>
 			<#list articles as a>
-				<div id="question">
+				<div class="article">
 					<div>
 						<a href="${path}/article/${a.id}">${a.title}</a>
-						<span id="tags">
+						<span class="tags">
 							<#list a.tags as tag>
 								<a href="#">${tag.name}</a>
 							</#list>

@@ -18,6 +18,9 @@
 						<div><a href="${path}/columns/${columns.id}/update"><i class="fa fa-cog"></i>专栏设置</a></div>
 					</div>
 				</#if>
+				<#if isMyself>
+					<a href="${path}/article/write" class="btn btn-primary">写文章</a>		
+				</#if>
 				<div class="col-md-offset-8 col-md-4">
 					<div><b>作者</b></div>
 					<div>
@@ -27,8 +30,14 @@
 				</div>
 			</div>
 		</div>
-		<#if isMyself>
-			<a href="${path}/article/write" class="btn btn-primary">写文章</a>		
-		</#if>
+		
+		
+		<div class="panel panel-info">
+			<#list articles as a>
+				<div>
+						<a href="${path}/article/${a.id}">${a.title}</a>
+				</div>
+			</#list>
+		</div>
 	</div>
 </@l.htmlBody>

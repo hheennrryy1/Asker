@@ -29,4 +29,8 @@ public class ArticleService {
 	public Article selectById(Integer id) {
 		return mapper.selectById(id);
 	}
+	
+	public List<Article> selectByColumnsId(Integer id) {
+		return mapper.selecyByColumnsId(id);
+	}
 }

@@ -33,6 +33,7 @@
 		#{columns.id, jdbcType=INTEGER}, #{user.id, jdbcType=INTEGER})
 	</insert>
 	
+	<!-- 根据ID选出文章 -->
 	<select id="selectById" resultMap="RelativeResultMap" parameterType="INTEGER">
 		select a.id as aid, a.title as atitle, a.content, a.created_time,
 		u.id as uid, u.username, u.picture,
@@ -48,10 +49,23 @@
 		limit 0,20
 	</select>
 	
+	<!-- 找最新的20篇文章 -->
 	<select id="selectByTime" resultMap="RelativeResultMap">
 	 	select a.id as aid, a.title as atitle, 
 		t.id as tid, t.name
         from article a left join article_tag at on at.article_id = a.id left join tag t on at.tag_id = t.id
         order by created_time desc limit 0,20
+	</select>
+	
+	<!-- 选出某个专栏的所有文章 -->
+	 <select id="selecyByColumnsId" resultMap="RelativeResultMap" parameterType="INTEGER">
+		select a.id as aid, a.title as atitle, a.created_time,
+		t.id as tid, t.name
+		from article a
+		join article_tag at on at.article_id = a.id 
+		join tag t on at.tag_id = t.id 
+		where a.columns_id = #{id, jdbcType=INTEGER}
+		order by created_time desc
+		limit 0,20
 	</select>
 </mapper>

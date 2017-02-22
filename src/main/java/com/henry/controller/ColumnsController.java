@@ -1,5 +1,7 @@
 package com.henry.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.henry.entity.Article;
 import com.henry.entity.Columns;
 import com.henry.entity.User;
+import com.henry.service.ArticleService;
 import com.henry.service.ColumnsService;
 
 @Controller
@@ -22,10 +26,16 @@ public class ColumnsController {
 	Logger logger = Logger.getLogger(ColumnsController.class);
 	
 	private ColumnsService columnsService;
+	private ArticleService articleService;
 	
 	@Autowired
 	public void setColumnsService(ColumnsService columnsService) {
 		this.columnsService = columnsService;
+	}
+	
+	@Autowired
+	public void setArticleService(ArticleService articleService) {
+		this.articleService = articleService;
 	}
 	
 	@ModelAttribute
@@ -58,6 +68,8 @@ public class ColumnsController {
 		}
 		mav.addObject("columns", columns);
 		mav.addObject("isMyself", isMyself);
+		List<Article> articles = articleService.selectByColumnsId(id);
+		mav.addObject("articles", articles);
 		mav.setViewName("columns/columns");
 		return mav;
 	}
