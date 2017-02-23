@@ -89,10 +89,9 @@ public class ArticleController {
 			}
 			tags.add(tag);
 		}
-		
-		/*Columns columns = new Columns();
-		columns.setId(1);
-		article.setColumns(columns);*/
+		//这里当作只有一个专栏
+		Columns columns = columnsService.selectByUserId(user.getId()).get(0);
+		article.setColumns(columns);
 		article.setCreatedTime(new Date());
 		article.setUser(user);
 		articleService.insert(article);

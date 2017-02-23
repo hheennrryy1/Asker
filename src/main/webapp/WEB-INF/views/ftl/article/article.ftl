@@ -21,6 +21,9 @@
 			<img src="${article.user.picture!'/picture/default.png'}" alt="avatar" class="img-thumbnail" height="36" width="36" >
 			${article.createdTime?date} 
 		</div>
+		
+		<br />
+		
 		<div class="text-center">
 			${article.content}
 		</div>
