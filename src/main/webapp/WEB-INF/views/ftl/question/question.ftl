@@ -88,7 +88,8 @@
 						<div class="col-md-7">
 							<span>编辑于${answer.lastUpdated?datetime}</span>
 							&nbsp;
-							<a href="">评论</a>
+							<a href="javascript:void(0);" class="addComment">评论</a>
+							<input type="hidden" value="${answer.id}"/>
 						</div>
 						<div class="col-md-5 text-right">
 							<img src="${answer.user.picture!'/picture/default.png'}" alt="avatar" class="img-thumbnail" height="36" width="36" >
@@ -98,9 +99,31 @@
 				</div>
 			</div>
 		</#list>
+
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+			        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        	<h4 class="modal-title" id="myModalLabel">评论</h4>
+					</div>
+					<div class="modal-body">
+			        	body
+					</div>
+			    	<div class="modal-footer">
+						<form action="${path}/comment/add" method="POST">
+							<textarea name="content" id="content" cols="50" rows="5"></textarea>
+							<input type="hidden" id="modalAnswerId" name="modalAnswerId"/>
+							<input type="hidden" id="modalQuestionId" name="modalQuestionId"/>
+							<button type="submit" class="btn btn-success" id="commentButton">提交</button>
+						</form>
+			    	</div>
+		    	</div>
+			</div>
+		</div>
 		
 		<#if Session.user?? && Session.user.status && !answered>
-			<form action="${path}/answer/add" method="POST">
+			<form id="answerForm" action="${path}/answer/add" method="POST">
 				<input type="hidden" value="${question.id}" name="questionId"/>
 				<div class="col-md-11 col-md-offset-1">
 					<h4>撰写答案</h4>
@@ -111,7 +134,7 @@
 				</div>
 			</form>
 		</#if>
-		
+
 		<#if page.size gt 0>
 			<div class="text-center">
 	            <ul class="pagination">

@@ -24,7 +24,7 @@
 			<#list questions as q>
 				<div class="question">
 					<div>
-						<a href="${path}/question/1?pageNum=1">${q.title}</a>
+						<a href="${path}/question/${q.id}?pageNum=1">${q.title}</a>
 						<span class="tags">
 							<#list q.tags as tag>
 								<a href="">${tag.name}</a>

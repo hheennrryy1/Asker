@@ -20,7 +20,7 @@ public class Question {
     
     private QuestionCounter questionCounter;
     
-    public Question(){};
+    public Question(){}
     
     public Integer getId() {
 		return id;

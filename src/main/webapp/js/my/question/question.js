@@ -1,6 +1,12 @@
 $(document).ready(function() {
 	$(".dropdown-toggle").dropdown();
 	
+	$(".addComment").on("click", function() {
+		$('#myModal').modal();
+		var answerId = $(this).next().val();
+		$("#modalAnswerId").val(answerId);
+	});
+	
 	$("#answerContent").summernote({
 		height: 100,
 		lang: 'zh-CN',
@@ -11,7 +17,7 @@ $(document).ready(function() {
 		]
 	});
 	
-	$("form").submit(function() {
+	$("#answerForm").submit(function() {
 		if($("#answerContent").summernote('isEmpty')) {
 			return false;
 		}
