@@ -4,7 +4,19 @@ $(document).ready(function() {
 	$(".addComment").on("click", function() {
 		$('#myModal').modal();
 		var answerId = $(this).next().val();
+		var questionId = $(this).next().next().val();
 		$("#modalAnswerId").val(answerId);
+		$("#modalQuestionId").val(questionId);
+		
+		$.getJSON("/Asker/comment/select/" + answerId, function(json){
+			$.each(json, function(index) {
+				$("#comments").append("<div>" + json[index].content
+						+ "<a href='/Asker/user/" + json[index].user.id + "'" +  ">" + "<br />"
+						+ json[index].user.username + "</a>"
+						+ "</div>"
+				);
+			});
+		});
 	});
 	
 	$("#answerContent").summernote({

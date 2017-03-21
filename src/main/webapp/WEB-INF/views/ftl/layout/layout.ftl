@@ -86,8 +86,6 @@
                             </ul>
                         </li>
                         
-						<li><a href="#">提醒</a></li>
-                        
 						<#if Session.user??>
 	                        <li class="dropdown">
 	                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">

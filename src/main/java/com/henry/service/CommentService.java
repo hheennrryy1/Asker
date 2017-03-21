@@ -1,5 +1,7 @@
 package com.henry.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +20,9 @@ public class CommentService {
 	
 	public int insert(Comment comment) {
 		return mapper.insert(comment);
+	}
+	
+	public List<Comment> selectByAnswerId(Integer answerId) {
+		return mapper.selectByAnswerId(answerId);
 	}
 }

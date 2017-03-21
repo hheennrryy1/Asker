@@ -90,6 +90,7 @@
 							&nbsp;
 							<a href="javascript:void(0);" class="addComment">评论</a>
 							<input type="hidden" value="${answer.id}"/>
+							<input type="hidden" value="${question.id}"/>
 						</div>
 						<div class="col-md-5 text-right">
 							<img src="${answer.user.picture!'/picture/default.png'}" alt="avatar" class="img-thumbnail" height="36" width="36" >
@@ -107,8 +108,8 @@
 			        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        	<h4 class="modal-title" id="myModalLabel">评论</h4>
 					</div>
-					<div class="modal-body">
-			        	body
+					<div class="modal-body" id="comments">
+			       
 					</div>
 			    	<div class="modal-footer">
 						<form action="${path}/comment/add" method="POST">
