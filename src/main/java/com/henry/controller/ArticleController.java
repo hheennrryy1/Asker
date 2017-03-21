@@ -110,9 +110,26 @@ public class ArticleController {
 	public ModelAndView article(@PathVariable Integer articleId, ModelAndView mav) {
 		articleService.selectById(articleId);
 		Article article = articleService.selectById(articleId);
+		if(article == null) {
+			throw new NullPointerException();
+		}
 		mav.addObject("article", article);
 		//写view
 		mav.setViewName("article/article");
 		return mav;
+	}
+	
+	@RequestMapping("/update/{articleId}")
+	public ModelAndView toUpdate(@PathVariable Integer articleId, ModelAndView mav) {
+		Article article = articleService.selectById(articleId);
+		mav.addObject("article", article);
+		mav.setViewName("article/update");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(Article article) {
+		articleService.updateById(article);
+		return "redirect:/article/" + article.getId();
 	}
 }

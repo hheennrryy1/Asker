@@ -19,6 +19,11 @@ $(document).ready(function() {
 		});
 	});
 	
+	//模态框消失的时候
+	$('#myModal').on('hidden.bs.modal', function (e) {
+		$("#comments").empty();
+	})
+	
 	$("#answerContent").summernote({
 		height: 100,
 		lang: 'zh-CN',

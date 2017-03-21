@@ -20,6 +20,9 @@
 			<a href="${path}/user/${article.user.id}">${article.user.username}</a>
 			<img src="${article.user.picture!'/picture/default.png'}" alt="avatar" class="img-thumbnail" height="36" width="36" >
 			${article.createdTime?date} 
+			<#if Session.user.id == article.user.id>
+				<a href="${path}/article/update/${article.id}"><i class="fa fa-edit"></i>编辑</a>
+			</#if>
 		</div>
 		
 		<br />

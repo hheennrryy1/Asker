@@ -33,4 +33,8 @@ public class ArticleService {
 	public List<Article> selectByColumnsId(Integer id) {
 		return mapper.selecyByColumnsId(id);
 	}
+	
+	public int updateById(Article article) {
+		return mapper.updateById(article);
+	}
 }
