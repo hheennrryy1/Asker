@@ -74,4 +74,8 @@
         title = #{title, jdbcType=VARCHAR}, content = #{content, jdbcType=LONGVARCHAR} 
         where id = #{id, jdbcType=INTEGER}
     </update>
+    
+    <delete id="delete" parameterType="INTEGER">
+    	delete from article where id = #{id, jdbcType=INTEGER}
+    </delete>
 </mapper>

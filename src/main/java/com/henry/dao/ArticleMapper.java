@@ -15,4 +15,6 @@ public interface ArticleMapper {
 	List<Article> selecyByColumnsId(Integer id);
 	
 	int updateById(Article article);
+	
+	int delete(Integer id);
 }

@@ -37,4 +37,8 @@ public class ArticleService {
 	public int updateById(Article article) {
 		return mapper.updateById(article);
 	}
+	
+	public int delete(Integer id) {
+		return mapper.delete(id); 
+	}
 }

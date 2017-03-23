@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.henry.entity.Article;
@@ -103,7 +104,7 @@ public class ArticleController {
 			articleTagService.insert(at);
 		}
 		
-		return "article/write";
+		return "redirect:/article/" + article.getId();
 	}
 	
 	@RequestMapping("/{articleId}")
@@ -131,5 +132,10 @@ public class ArticleController {
 	public String update(Article article) {
 		articleService.updateById(article);
 		return "redirect:/article/" + article.getId();
+	}
+	
+	@RequestMapping("/delete/{id}")
+	public @ResponseBody int delete(@PathVariable Integer id) {
+		return articleService.delete(id);
 	}
 }
