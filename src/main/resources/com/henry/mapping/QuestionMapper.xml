@@ -53,9 +53,9 @@
     </delete>
     
     <insert id="insert" parameterType="Question" keyProperty="id" useGeneratedKeys="true">
-        insert into question (id, title, created_time, 
+        insert into question (title, created_time, 
             user_id, content)
-        values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+        values (#{title,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
             #{user.id,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
     </insert>
     

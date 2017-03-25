@@ -130,7 +130,7 @@ public class QuestionController {
 			qt.setTag(tag);
 			questagService.insert(qt);
 		}
-		return "index";
+		return "redirect:/index";
 	}
 	
 	//跳到问题页面

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.henry.dao.NoteMapper" >
+    <resultMap id="BaseResultMap" type="com.henry.entity.Note" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+        <result column="authority" property="authority" jdbcType="BIT" />
+        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <resultMap type="Note" id="RelativeResultMap" extends="BaseResultMap">
+        <association property="user" javaType="User">
+        	<id column="uid" property="id" jdbcType="INTEGER"/>
+        	<result column="username" property="username" jdbcType="VARCHAR" />
+        	<result column="picture" property="picture" jdbcType="VARCHAR" />
+        </association> 
+    </resultMap>
+
+	<insert id="insert" parameterType="Note" keyProperty="id" useGeneratedKeys="true">
+		 insert into note (title, content,
+		 						 user_id, created_time, authority)
+        values (#{title,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR},
+    			     #{user.id,jdbcType=VARCHAR}, #{createdTime, jdbcType=TIMESTAMP}, #{authority, jdbcType=BIT})
+	</insert>	
+	
+	<select id="selectByUserId" parameterType="INTEGER" resultMap="RelativeResultMap">
+		select n.id, n.title, n.created_time, n.content, n.authority
+		u.id, u.username, u.picture 
+		from note n join user u on n.user_id = u.id 
+		where u.id = #{id, jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectById" parameterType="INTEGER" resultMap="RelativeResultMap">
+		select n.id, n.title, n.created_time, n.content, n.authority
+		u.id, u.username, u.picture 
+		from note n join user u on n.user_id = u.id 
+		where u.id = #{id, jdbcType=INTEGER}
+	</select>
+	
+</mapper>
