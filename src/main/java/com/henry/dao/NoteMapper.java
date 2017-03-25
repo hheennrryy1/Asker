@@ -11,4 +11,6 @@ public interface NoteMapper {
 	List<Note> selectByUserId(Integer userId);
 	
 	Note selectById(Integer id);
+	
+	int delete(Integer id);
 }

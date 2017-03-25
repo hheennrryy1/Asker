@@ -107,6 +107,7 @@ public class ArticleController {
 		return "redirect:/article/" + article.getId();
 	}
 	
+	//转向到文章页面
 	@RequestMapping("/{articleId}")
 	public ModelAndView article(@PathVariable Integer articleId, ModelAndView mav) {
 		articleService.selectById(articleId);

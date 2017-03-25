@@ -33,7 +33,6 @@ public class AnswerService {
 	public PageInfo<Answer> selectByQuestionId(Integer questionId, Integer pageNum, int pageSize) {
 		//pageNum,pageSize 每页显示5条
 		PageHelper.startPage(pageNum, pageSize);
-		PageHelper.startPage(pageNum, pageSize);
 		List<Answer> answers = mapper.selectByIds(questionId, null);
 		PageInfo<Answer> pageInfo = new PageInfo<Answer>(answers);
 		return pageInfo;

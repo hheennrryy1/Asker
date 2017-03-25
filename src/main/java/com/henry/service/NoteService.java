@@ -29,4 +29,8 @@ public class NoteService {
 	public Note selectById(Integer id) {
 		return mapper.selectById(id);
 	}
+
+	public int delete(Integer id) {
+		return mapper.delete(id);
+	}
 }

@@ -1,6 +1,6 @@
 <#import "*/layout/layout.ftl" as l>
 
-<@l.htmlHead "">
+<@l.htmlHead "记笔记">
 		<link rel="stylesheet" href="${path}/css/public/summernote.css" />
 		<script src="${path}/js/public/summernote.min.js"></script>
 		<script src="${path}/js/public/summernote-zh-CN.min.js"></script>

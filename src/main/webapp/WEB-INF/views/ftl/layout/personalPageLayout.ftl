@@ -78,7 +78,7 @@
 			<a href="${path}/user/${personalPageUser.id}/asks">提问</a>
 			<a href="${path}/user/${personalPageUser.id}/answers">回答</a>
 			<a href="${path}/user/${personalPageUser.id}/articles">文章</a>
-			<a href="">笔记</a>
+			<a href="${path}/user/${personalPageUser.id}/notes">笔记</a>
 		</div>
 		<#nested>
 	</div>	

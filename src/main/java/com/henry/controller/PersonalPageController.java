@@ -21,6 +21,7 @@ import com.github.pagehelper.PageInfo;
 import com.henry.entity.Answer;
 import com.henry.entity.AnswerCounter;
 import com.henry.entity.Columns;
+import com.henry.entity.Note;
 import com.henry.entity.Question;
 import com.henry.entity.User;
 import com.henry.redis.entity.QuestionCounter;
@@ -28,6 +29,7 @@ import com.henry.redis.service.QuestionCounterService;
 import com.henry.service.AnswerCounterService;
 import com.henry.service.AnswerService;
 import com.henry.service.ColumnsService;
+import com.henry.service.NoteService;
 import com.henry.service.QuestionService;
 import com.henry.service.UserService;
 
@@ -45,6 +47,7 @@ public class PersonalPageController {
 	private AnswerService answerService;
 	private AnswerCounterService answerCounterService;
 	private ColumnsService columnsService; 
+	private NoteService noteService;
 	
 	private QuestionCounterService questionCounterService;
 	
@@ -76,6 +79,11 @@ public class PersonalPageController {
 	@Autowired
 	public void setColumnsService(ColumnsService columnsService) {
 		this.columnsService = columnsService;
+	}
+	
+	@Autowired
+	public void setNoteService(NoteService noteService) {
+		this.noteService = noteService;
 	}
 
 	@ModelAttribute
@@ -231,6 +239,26 @@ public class PersonalPageController {
 		List<Columns> columnsList = columnsService.selectByUserId(user.getId());
 		mav.addObject("columns", columnsList);
 		mav.setViewName("user/articles");
+		return mav;
+	}
+	
+	//转向到查看用户所有笔记页面，先准备数据
+	@RequestMapping("/{uid}/notes")
+	public ModelAndView notes(@PathVariable("uid") Integer id, ModelAndView mav, @ModelAttribute User user) {
+		boolean isMyself = false;
+		if(user.getId().equals(id)) {
+			isMyself = true;
+		}
+		//判断是不是用户自己进入个人主页
+		mav.addObject("isMyself", isMyself);
+		
+		User u = new User(id);
+		List<User> list = userService.selectUserListById(u);
+		mav.addObject("personalPageUser", list.get(0));
+
+		List<Note> notes = noteService.selectByUserId(id);
+		mav.addObject("notes", notes);
+		mav.setViewName("user/notes");
 		return mav;
 	}
 }
