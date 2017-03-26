@@ -122,8 +122,13 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/update/{articleId}")
-	public ModelAndView toUpdate(@PathVariable Integer articleId, ModelAndView mav) {
+	public ModelAndView toUpdate(@PathVariable Integer articleId, ModelAndView mav, HttpSession session) {
+		User user = (User)session.getAttribute("user");
+		
 		Article article = articleService.selectById(articleId);
+		if(user.getId() != article.getUser().getId()) {
+			return null;
+		}
 		mav.addObject("article", article);
 		mav.setViewName("article/update");
 		return mav;

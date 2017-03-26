@@ -49,12 +49,15 @@ public class NoteController {
 	
 	//笔记页面
 	@RequestMapping("/{noteId}")
-	public ModelAndView note(@PathVariable Integer noteId, ModelAndView mav) {
+	public ModelAndView note(@PathVariable Integer noteId, ModelAndView mav, @ModelAttribute User user) {
 		Note note = noteService.selectById(noteId);
 		if(note==null) {
 			throw new NullPointerException();
 		}
-		//System.out.println(note.getUser().getPicture());
+		//如果是私密笔记 验证是否为本用户
+		if(!note.getAuthority() && (user.getId() != note.getUser().getId())) {
+			return null;
+		}
 		mav.addObject("note", note);
 		mav.setViewName("note/note");
 		return mav;
@@ -64,5 +67,24 @@ public class NoteController {
 	@RequestMapping("/delete/{id}")
 	public @ResponseBody int delete(@PathVariable Integer id) {
 		return noteService.delete(id);
+	}
+	
+	@RequestMapping("/update/{id}")
+	public ModelAndView toUpdate(ModelAndView mav, @PathVariable Integer id, HttpSession session) {
+		User user = (User)session.getAttribute("user");
+		
+		Note note = noteService.selectById(id);
+		if(user.getId() != note.getUser().getId()) {
+			return null;
+		}
+		mav.addObject("note", note);
+		mav.setViewName("note/update");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(Note note) {
+		noteService.update(note);
+		return "redirect:/note/" + note.getId();
 	}
 }

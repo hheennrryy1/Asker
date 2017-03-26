@@ -14,7 +14,6 @@
 <@l.htmlBody>
 	<div class="container">
 		<div class="panel panel-default">
-			<h5>写文章</h5>
 			<div class="panel-body">
 				<form class="form-horizontal" action="${path}/article/write" role="form" method="POST"> 
 					<div class="form-group">

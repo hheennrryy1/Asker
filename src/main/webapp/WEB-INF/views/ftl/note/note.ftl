@@ -28,10 +28,17 @@
 			<a href="${path}/user/${note.user.id}">${note.user.username}</a>
 			<img src="${note.user.picture!'/picture/default.png'}" alt="avatar" class="img-thumbnail" height="36" width="36" >
 			${note.createdTime?date} 
-			<#if Session.user.id == note.user.id>
-				<a href="${path}/note/update/${note.id}"><i class="fa fa-edit"></i>编辑</a>
-				<a href="javascript:void(0);" id="delete"><i class="fa fa-trash"></i>删除</a>
-			</#if>
+			<div>
+				<#if Session.user.id == note.user.id>
+					<a href="${path}/note/update/${note.id}"><i class="fa fa-edit"></i>编辑</a>
+					<a href="javascript:void(0);" id="delete"><i class="fa fa-trash"></i>删除</a>
+				</#if>
+				<#if note.authority>
+					<b>公开笔记</b>
+					<#elseif !note.authority>
+					<b>私密笔记</b>
+				</#if>
+			</div>
 		</div>
 		
 		<br />

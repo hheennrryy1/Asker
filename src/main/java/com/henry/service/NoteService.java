@@ -33,4 +33,8 @@ public class NoteService {
 	public int delete(Integer id) {
 		return mapper.delete(id);
 	}
+	
+	public int update(Note note) {
+		return mapper.update(note);
+	}
 }

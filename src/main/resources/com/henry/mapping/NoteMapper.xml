@@ -39,4 +39,12 @@
 	<delete id="delete" parameterType="INTEGER">
 		delete from note where id = #{id, jdbcType=INTEGER}
 	</delete>
+	
+	<update id="update" parameterType="Note">
+		update note set
+		title = #{title, jdbcType=VARCHAR},
+		content = #{content, jdbcType=LONGVARCHAR},
+		authority = #{authority, jdbcType=BIT}
+		where id = #{id, jdbcType=INTEGER}
+	</update>
 </mapper>

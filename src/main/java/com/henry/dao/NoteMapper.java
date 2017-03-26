@@ -13,4 +13,6 @@ public interface NoteMapper {
 	Note selectById(Integer id);
 	
 	int delete(Integer id);
+	
+	int update(Note note);
 }
