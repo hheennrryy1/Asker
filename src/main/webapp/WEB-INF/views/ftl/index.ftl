@@ -21,10 +21,10 @@
 	<div class="container">
 		<div class="panel panel-success">
 			<div class="panel-heading">最新提问</div>
-			<#list questions as q>
+			<#list qpage.list as q>
 				<div class="question">
 					<div>
-						<a href="${path}/question/${q.id}?pageNum=1">${q.title}</a>
+						<a href="${path}/question/${q.id}">${q.title}</a>
 						<span class="tags">
 							<#list q.tags as tag>
 								<a href="">${tag.name}</a>
@@ -37,7 +37,7 @@
 		
 		<div class="panel panel-info">
 			<div class="panel-heading">最新文章</div>
-			<#list articles as a>
+			<#list apage.list as a>
 				<div class="article">
 					<div>
 						<a href="${path}/article/${a.id}">${a.title}</a>

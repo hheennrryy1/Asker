@@ -62,9 +62,9 @@
                 
                 <div class="navbar-collapse collapse" id="example-navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="#">问答</a></li>
-                        <li><a href="#">文章</a></li>
-                        <li><a href="#">笔记</a></li>
+                        <li><a href="${path}/questions">问题</a></li>
+                        <li><a href="${path}/articles">文章</a></li>
+                        <li><a href="${path}/notes">笔记</a></li>
                     </ul>
                     
 					<div>

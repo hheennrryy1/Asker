@@ -27,7 +27,8 @@ public class GlobalExceptionHandler {
 	public ModelAndView handlerException(Exception e) {
 		e.printStackTrace();
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("info", "服务器出现错误");
+		//mav.addObject("info", "服务器出现错误");
+		mav.addObject("info", e.getMessage());
 		if(e instanceof MaxUploadSizeExceededException) {
 			mav.addObject("info", "文件太大，请重试!");
 		}

@@ -31,8 +31,12 @@ public class QuestionService {
 		return page;
 	}
 	
-	public List<Question> selectByTime() {
-		return mapper.selectByTime();
+	//翻页
+	public PageInfo<Question> selectAllByTime(Integer pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize, "created_time desc");
+		List<Question> questions = mapper.selectAllByTime();
+		PageInfo<Question> page = new PageInfo<>(questions);
+		return page;
 	}
 	
 	public int insert(Question question) {

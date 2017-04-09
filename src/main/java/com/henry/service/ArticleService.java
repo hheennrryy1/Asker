@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.henry.dao.ArticleMapper;
 import com.henry.entity.Article;
+import com.henry.entity.Question;
 
 @Service
 public class ArticleService {
@@ -24,6 +27,13 @@ public class ArticleService {
 	
 	public List<Article> selectByTime() {
 		return mapper.selectByTime();
+	}
+	
+	public PageInfo<Article> selectAllByTime(Integer pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize, "created_time desc");
+		List<Article> articles = mapper.selectAllByTime();
+		PageInfo<Article> page = new PageInfo<>(articles);
+		return page;
 	}
 	
 	public Article selectById(Integer id) {

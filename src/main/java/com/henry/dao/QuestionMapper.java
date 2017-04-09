@@ -9,7 +9,7 @@ public interface QuestionMapper {
 	
 	List<Question> selectByUserId(Integer userId);
 	
-	List<Question> selectByTime();
+	List<Question> selectAllByTime();
 	
     int deleteById(Integer id);
 
