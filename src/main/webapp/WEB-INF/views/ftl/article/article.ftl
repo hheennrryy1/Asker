@@ -26,7 +26,7 @@
 		<div>
 			<div class="col-md-6">
 				<#list article.tags as t>
-					<a href="#">${t.name}</a>
+					<a href="${path}/tag/${t.id}/articles">${t.name}</a>
 				</#list>
 			</div>
 			<div class="col-md-6 text-right">

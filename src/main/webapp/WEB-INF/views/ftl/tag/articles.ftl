@@ -1,8 +1,8 @@
 <#import "*/layout/layout.ftl" as l>
 
-<@l.htmlHead "问题">
+<@l.htmlHead "文章">
 	<style>
-		.question {
+		.article {
 			margin-top: 10px;
 		}
 		.tags {
@@ -17,14 +17,14 @@
 <@l.htmlBody>
 	<div class="container">
 		<div class="panel panel-success">
-			<div class="panel-heading">全部问题</div>
-			<#list page.list as q>
-				<div class="question">
+			<div class="panel-heading">全部文章</div>
+			<#list page.list as a>
+				<div class="article">
 					<div>
-						<a href="${path}/question/${q.id}">${q.title}</a>
+						<a href="${path}/articles/${a.id}">${a.title}</a>
 						<span class="tags">
-							<#list q.tags as tag>
-								<a href="${path}/tag/${tag.id}/questions">${tag.name}</a>
+							<#list a.tags as tag>
+								<a href="${path}/tag/${tag.id}">${tag.name}</a>
 							</#list>
 						</span>
 					</div>

@@ -49,14 +49,6 @@
 		limit 0,20
 	</select>
 	
-	<!-- 找最新的20篇文章 -->
-	<select id="selectByTime" resultMap="RelativeResultMap">
-	 	select a.id as aid, a.title as atitle, 
-		t.id as tid, t.name
-        from article a left join article_tag at on at.article_id = a.id left join tag t on at.tag_id = t.id
-        order by created_time desc limit 0,20
-	</select>
-	
 	<select id="selectAllByTime" resultMap="RelativeResultMap">
 	 	select a.id as aid, a.title as atitle, 
 		t.id as tid, t.name
@@ -73,6 +65,13 @@
 		where a.columns_id = #{id, jdbcType=INTEGER}
 		order by created_time desc
 		limit 0,20
+	</select>
+	
+	<select id="selectByTag" resultMap="RelativeResultMap" parameterType="INTEGER">
+		select a.id as aid, a.title as atitle, 
+		t.id as tid, t.name
+        from article a left join article_tag at on at.article_id = a.id left join tag t on at.tag_id = t.id
+		where t.id = #{id, jdbcType=INTEGER}
 	</select>
 	
     <update id="updateById" parameterType="Article" >

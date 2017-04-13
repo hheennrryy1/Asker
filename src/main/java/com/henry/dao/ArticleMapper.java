@@ -8,9 +8,9 @@ public interface ArticleMapper {
 	
 	int insert(Article article);
 	
-	List<Article> selectByTime();
-	
 	List<Article> selectAllByTime();
+	
+	List<Article> selectByTag(Integer id);
 	
 	Article selectById(Integer id);
 	

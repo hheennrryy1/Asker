@@ -46,6 +46,15 @@
         left join tag t on qt.tag_id = t.id
     </select>
     
+    <select id="selectByTag" resultMap="RelativeResultMap" parameterType="INTEGER">
+    	select q.id as qid, q.title, q.content, q.created_time,
+        t.id as tid, t.name
+        from question q 
+        left join question_tag qt on qt.question_id = q.id 
+        left join tag t on qt.tag_id = t.id
+        where t.id = #{id, jdbcType=INTEGER}
+    </select>
+    
     <delete id="deleteById" parameterType="java.lang.Integer" >
         delete from question
         where id = #{id,jdbcType=INTEGER}

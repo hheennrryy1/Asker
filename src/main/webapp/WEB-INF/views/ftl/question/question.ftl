@@ -16,7 +16,7 @@
 		<div id="question">
 			<div id="tag">
 				<#list question.tags as tag>
-					<a href="">${tag.name}</a>
+					<a href="${path}/tag/${tag.id}/questions">${tag.name}</a>
 				</#list>
 			</div>
 			

@@ -24,7 +24,7 @@
 						<a href="${path}/question/${q.id}">${q.title}</a>
 						<span class="tags">
 							<#list q.tags as tag>
-								<a href="${path}/tag/${tag.id}/questions">${tag.name}</a>
+								<a href="${path}/tag/${tag.id}">${tag.name}</a>
 							</#list>
 						</span>
 					</div>

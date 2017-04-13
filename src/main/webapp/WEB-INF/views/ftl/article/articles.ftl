@@ -21,10 +21,10 @@
 			<#list page.list as a>
 				<div class="article">
 					<div>
-						<a href="${path}/articles/${a.id}">${a.title}</a>
+						<a href="${path}/article/${a.id}">${a.title}</a>
 						<span class="tags">
 							<#list a.tags as tag>
-								<a href="">${tag.name}</a>
+								<a href="${path}/tag/${tag.id}/articles">${tag.name}</a>
 							</#list>
 						</span>
 					</div>

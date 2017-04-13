@@ -39,6 +39,15 @@ public class QuestionService {
 		return page;
 	}
 	
+	public PageInfo<Question> selectByTag(Integer pageNum, int pageSize, Integer id) {
+		PageHelper.startPage(pageNum, pageSize, "created_time desc");
+		List<Question> questions = mapper.selectByTag(id);
+		PageInfo<Question> page = new PageInfo<>(questions);
+		return page;
+	}
+	
+	
+	
 	public int insert(Question question) {
     	return mapper.insert(question);
     }

@@ -9,7 +9,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.henry.dao.ArticleMapper;
 import com.henry.entity.Article;
-import com.henry.entity.Question;
 
 @Service
 public class ArticleService {
@@ -25,13 +24,16 @@ public class ArticleService {
 		return mapper.insert(article);
 	}
 	
-	public List<Article> selectByTime() {
-		return mapper.selectByTime();
-	}
-	
 	public PageInfo<Article> selectAllByTime(Integer pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize, "created_time desc");
 		List<Article> articles = mapper.selectAllByTime();
+		PageInfo<Article> page = new PageInfo<>(articles);
+		return page;
+	}
+	
+	public PageInfo<Article> selectByTag(Integer pageNum, int pageSize, Integer id) {
+		PageHelper.startPage(pageNum, pageSize, "created_time desc");
+		List<Article> articles = mapper.selectByTag(id);
 		PageInfo<Article> page = new PageInfo<>(articles);
 		return page;
 	}

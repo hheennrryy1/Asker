@@ -11,6 +11,8 @@ public interface QuestionMapper {
 	
 	List<Question> selectAllByTime();
 	
+	List<Question> selectByTag(Integer id);
+	
     int deleteById(Integer id);
 
     int insert(Question question);
