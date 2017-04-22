@@ -1,7 +1,5 @@
 package com.henry.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +58,22 @@ public class JumpController {
 		mav.addObject("page", page);
 		
 		mav.setViewName("article/articles");
+		return mav;
+	}
+	
+	@RequestMapping("/search")
+	public ModelAndView search(ModelAndView mav, String title, String type, 
+				@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
+		if("question".equals(type)) {
+			PageInfo<Question> page = questionService.selectByTitle(1, PAGE_SIZE, title);
+			mav.addObject("page", page);
+			mav.setViewName("question/search");
+		}
+		else if("article".equals(type)) {
+			PageInfo<Article> page = articleService.selectByTitle(1, PAGE_SIZE, title);
+			mav.addObject("page", page);
+			mav.setViewName("article/search");
+		}
 		return mav;
 	}
 }

@@ -74,6 +74,13 @@
 		where t.id = #{id, jdbcType=INTEGER}
 	</select>
 	
+	<select id="selectByTitle" resultMap="RelativeResultMap" parameterType="String">
+		select a.id as aid, a.title as atitle, 
+		t.id as tid, t.name
+        from article a left join article_tag at on at.article_id = a.id left join tag t on at.tag_id = t.id
+        where a.title like concat('%',#{title, jdbcType=VARCHAR},'%') 
+	</select>
+	
     <update id="updateById" parameterType="Article" >
         update article set
         title = #{title, jdbcType=VARCHAR}, content = #{content, jdbcType=LONGVARCHAR} 

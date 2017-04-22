@@ -12,6 +12,8 @@ public interface QuestionMapper {
 	List<Question> selectAllByTime();
 	
 	List<Question> selectByTag(Integer id);
+
+	List<Question> selectByTitle(String title);
 	
     int deleteById(Integer id);
 

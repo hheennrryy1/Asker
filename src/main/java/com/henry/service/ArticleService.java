@@ -46,6 +46,13 @@ public class ArticleService {
 		return mapper.selecyByColumnsId(id);
 	}
 	
+	public PageInfo<Article> selectByTitle(Integer pageNum, int pageSize, String title) {
+		PageHelper.startPage(pageNum, pageSize, "created_time desc");
+		List<Article> articles = mapper.selectByTitle(title);
+		PageInfo<Article> page = new PageInfo<>(articles);
+		return page;
+	}
+	
 	public int updateById(Article article) {
 		return mapper.updateById(article);
 	}

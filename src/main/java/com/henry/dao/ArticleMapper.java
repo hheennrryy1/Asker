@@ -14,6 +14,8 @@ public interface ArticleMapper {
 	
 	Article selectById(Integer id);
 	
+	List<Article> selectByTitle(String title);
+	
 	List<Article> selecyByColumnsId(Integer id);
 	
 	int updateById(Article article);

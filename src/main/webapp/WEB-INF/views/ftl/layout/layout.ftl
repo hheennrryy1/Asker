@@ -64,19 +64,20 @@
                     <ul class="nav navbar-nav">
                         <li><a href="${path}/questions">问题</a></li>
                         <li><a href="${path}/articles">文章</a></li>
-                        <li><a href="${path}/notes">笔记</a></li>
                     </ul>
                     
 					<div>
-						<form class="navbar-form navbar-left" role="search">
+						<form class="navbar-form navbar-left" action="${path}/search" method="GET" role="search">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="关键字">
+								<input type="text" class="form-control" placeholder="关键字" name="title" id="title">
+								<input type="hidden" name="type" value="question"/>
 								<button type="submit" class="btn btn-success">搜索</button>
 							</div>
 						</form>    
 					</div>
 	           		
                     <ul class="nav navbar-nav navbar-right">
+					<#if Session.user??>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">撰写 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -86,7 +87,6 @@
                             </ul>
                         </li>
                         
-						<#if Session.user??>
 	                        <li class="dropdown">
 	                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									${Session.user.username}<b class="caret"></b>
@@ -99,9 +99,8 @@
 	                        </li>
 	                        <#else>
 	                        	<li><a href="${path}/login.html">登录</a></li>
-						</#if>           
+					</#if>           
                     </ul>
-                    
                 </div>
 		</div>
 	</div>

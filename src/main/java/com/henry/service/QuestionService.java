@@ -46,7 +46,12 @@ public class QuestionService {
 		return page;
 	}
 	
-	
+	public PageInfo<Question> selectByTitle(Integer pageNum, int pageSize, String title) {
+		PageHelper.startPage(pageNum, pageSize, "created_time desc");
+		List<Question> questions = mapper.selectByTitle(title);
+		PageInfo<Question> page = new PageInfo<>(questions);
+		return page;
+	}
 	
 	public int insert(Question question) {
     	return mapper.insert(question);

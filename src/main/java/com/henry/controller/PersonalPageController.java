@@ -49,7 +49,7 @@ public class PersonalPageController {
 	private ColumnsService columnsService; 
 	private NoteService noteService;
 	
-	private QuestionCounterService questionCounterService;
+	//private QuestionCounterService questionCounterService;
 	
 	@Autowired
 	public void setUserService(UserService userService) {
@@ -71,10 +71,10 @@ public class PersonalPageController {
 		this.answerCounterService = answerCounterService;
 	}
 	
-	@Autowired
+/*	@Autowired
 	public void setQuestionCounterService(QuestionCounterService questionCounterService) {
 		this.questionCounterService = questionCounterService;
-	}
+	}*/
 	
 	@Autowired
 	public void setColumnsService(ColumnsService columnsService) {
@@ -109,10 +109,10 @@ public class PersonalPageController {
 		mav.addObject("likesCount", likesCount);
 		
 		PageInfo<Question> qPage = questionService.selectByUserId(id, PERSONAL_PAGE_SIZE);
-		for( Question q : qPage.getList()) {
+		/*for( Question q : qPage.getList()) {
 			Integer clickCount = questionCounterService.getClickCount(q.getId());
 			q.setQuestionCounter(new QuestionCounter(clickCount));
-		}
+		}*/
 		mav.addObject("qPage", qPage);
 		
 		PageInfo<Answer> aPage = answerService.selectByUserId(id, PERSONAL_PAGE_SIZE);
@@ -183,10 +183,10 @@ public class PersonalPageController {
 		mav.addObject("likesCount", likesCount);
 		
 		PageInfo<Question> qPage = questionService.selectByUserId(id, ASKS_PAGE_SIZE);
-		for(Question q : qPage.getList()) {
+	/*	for(Question q : qPage.getList()) {
 			Integer clickCount = questionCounterService.getClickCount(q.getId());
 			q.setQuestionCounter(new QuestionCounter(clickCount));
-		}
+		}*/
 		mav.addObject("qPage", qPage);
 		
 		mav.setViewName("user/asks");

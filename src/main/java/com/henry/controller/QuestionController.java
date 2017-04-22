@@ -48,7 +48,7 @@ public class QuestionController {
 	private VoteService voteService;
 	private AnswerCounterService counterService;
 	
-	private QuestionCounterService quesCounterService;
+	//private QuestionCounterService quesCounterService;
 	
 	@Autowired
 	public void setQuesService(QuestionService quesService) {
@@ -80,10 +80,10 @@ public class QuestionController {
 		this.voteService = voteService;
 	}
 
-	@Autowired
+/*	@Autowired
 	public void setQuesCounterService(QuestionCounterService quesCounterService) {
 		this.quesCounterService = quesCounterService;
-	}
+	}*/
 	
 	//跳转到提问页面
 	@RequestMapping(value = "/ask", method = RequestMethod.GET)
@@ -118,10 +118,10 @@ public class QuestionController {
 		question.setUser(user);
 		quesService.insert(question);
 		
-		//redis中创建一个计数器
+/*		//redis中创建一个计数器
 		quesCounterService.hset(question.getId());
 		//redis中创建一个set记录浏览过的用户的id
-		quesCounterService.sadd(question.getId(), user.getId());
+		quesCounterService.sadd(question.getId(), user.getId());*/
 		
 		//存Question和Tag的关系
 		QuestionTag qt = new QuestionTag();
@@ -146,14 +146,14 @@ public class QuestionController {
 		}
 		mav.addObject("question", question);
 		
-		boolean isMember = quesCounterService.isMember(id, user.getId());
+/*		boolean isMember = quesCounterService.isMember(id, user.getId());
 		//如果用户没浏览过这个问题，浏览量加一
 		if(!isMember) {
 			quesCounterService.sadd(id, user.getId());
 			quesCounterService.incrClickCount(id);
 		}
 		Integer count = quesCounterService.getClickCount(id);
-		mav.addObject("count", count);
+		mav.addObject("count", count);*/
 		
 		//找到问题下的答案，并分页
 		PageInfo<Answer> page = answerService.selectByQuestionId(id, pageNum, PAGE_SIZE);
@@ -196,14 +196,14 @@ public class QuestionController {
 		}
 		mav.addObject("question", question);
 		
-		boolean isMember = quesCounterService.isMember(questionId, user.getId());
+	/*	boolean isMember = quesCounterService.isMember(questionId, user.getId());
 		//如果用户没浏览过这个问题，浏览量加一
 		if(!isMember) {
 			quesCounterService.sadd(questionId, user.getId());
 			quesCounterService.incrClickCount(questionId);
 		}
 		Integer clickCount = quesCounterService.getClickCount(questionId);
-		mav.addObject("clickCount", clickCount);
+		mav.addObject("clickCount", clickCount);*/
 		
 		//选择某个答案
 		Answer answer = answerService.selectOneAnswer(answerId, questionId);
