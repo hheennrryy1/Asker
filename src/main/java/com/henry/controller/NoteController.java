@@ -55,7 +55,7 @@ public class NoteController {
 			throw new NullPointerException();
 		}
 		//如果是私密笔记 验证是否为本用户
-		if(!note.getAuthority() && (user.getId() != note.getUser().getId())) {
+		if(!note.getAuthority() && !(user.getId().equals(note.getUser().getId()))) {
 			return null;
 		}
 		mav.addObject("note", note);

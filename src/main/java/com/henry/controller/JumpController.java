@@ -46,7 +46,6 @@ public class JumpController {
 			@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
 		PageInfo<Question> page = questionService.selectAllByTime(pageNum, PAGE_SIZE);
 		mav.addObject("page", page);
-		
 		mav.setViewName("question/questions");
 		return mav;
 	}

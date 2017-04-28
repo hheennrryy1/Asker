@@ -40,7 +40,7 @@
 			<div class="text-center">
 	            <ul class="pagination">
 	            	<#list page.navigatepageNums as i>
-	              		<li><a href="${path}/questions/?pageNum=${i}">${i}</a></li>
+	              		<li <#if page.pageNum == i>class="active"</#if>><a href="${path}/questions/?pageNum=${i}">${i}</a></li>
 	            	</#list>
 	            </ul>
 	            <span>共${page.pages}页</span>
