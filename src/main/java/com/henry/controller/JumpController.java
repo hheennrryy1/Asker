@@ -62,15 +62,16 @@ public class JumpController {
 	}
 	
 	@RequestMapping("/search")
-	public ModelAndView search(ModelAndView mav, String title, String type, 
+	public ModelAndView search(ModelAndView mav, String keyWord, String type, 
 				@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
+		mav.addObject("keyWord", keyWord);//这里不行
 		if("question".equals(type)) {
-			PageInfo<Question> page = questionService.selectByTitle(1, PAGE_SIZE, title);
+			PageInfo<Question> page = questionService.selectByTitle(1, PAGE_SIZE, keyWord);
 			mav.addObject("page", page);
 			mav.setViewName("question/search");
 		}
 		else if("article".equals(type)) {
-			PageInfo<Article> page = articleService.selectByTitle(1, PAGE_SIZE, title);
+			PageInfo<Article> page = articleService.selectByTitle(1, PAGE_SIZE, keyWord);
 			mav.addObject("page", page);
 			mav.setViewName("article/search");
 		}

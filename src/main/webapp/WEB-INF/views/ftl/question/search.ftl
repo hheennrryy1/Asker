@@ -17,8 +17,8 @@
 <@l.htmlBody>
 	<div class="container">
 		<ul class="nav nav-pills">
-			<li role="presentation" class="active"><a href="#">问题</a></li>
-			<li role="presentation"><a href="${path}/search?">文章</a></li>
+			<li role="presentation" class="active"><a href="${path}/search?type=question&keyWord=${keyWord}">问题</a></li>
+			<li role="presentation"><a href="${path}/search?type=article&keyWord=${keyWord}">文章</a></li>
 		</ul>
 		<div class="panel panel-success">
 			<div class="panel-heading">全部问题</div>

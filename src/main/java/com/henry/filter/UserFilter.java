@@ -27,8 +27,10 @@ public class UserFilter implements Filter {
 		HttpServletRequest requ = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
 		User user = (User) requ.getSession().getAttribute("user");
-		if(user==null) {
+		String ajaxHeader = requ.getHeader("x-requested-with");
+		if(user==null && ajaxHeader==null) {
 			resp.sendRedirect(requ.getContextPath() + "/login.html");
+			return;
 		}
 		chain.doFilter(request, response);
 	}

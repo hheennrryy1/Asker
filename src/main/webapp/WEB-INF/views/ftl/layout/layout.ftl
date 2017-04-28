@@ -69,7 +69,7 @@
 					<div>
 						<form class="navbar-form navbar-left" action="${path}/search" method="GET" role="search">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="关键字" name="title" id="title">
+								<input type="text" class="form-control" placeholder="关键字" name="keyWord" value="${keyWord}" id="keyWord">
 								<input type="hidden" name="type" value="question"/>
 								<button type="submit" class="btn btn-success">搜索</button>
 							</div>

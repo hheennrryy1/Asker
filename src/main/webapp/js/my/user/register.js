@@ -84,8 +84,6 @@ $(document).ready(function() {
 			flag = false;
 		}
 		
-		alert("验证结果为:" + flag);
-		
 		if(flag) {
 			var SHA512 = new Hashes.SHA512();
 			$("#password").val(SHA512.hex(password));

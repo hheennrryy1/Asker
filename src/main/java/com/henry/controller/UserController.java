@@ -3,6 +3,7 @@ package com.henry.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -45,7 +46,6 @@ public class UserController {
 	public @ResponseBody String emailValidate(User user) {
 		//根据Email找User
 		List<User> list = userService.selectUserListByEmail(user);
-		
 		//为空的 则没重复
 		if(list.isEmpty()) {
 			return "success";
@@ -88,16 +88,15 @@ public class UserController {
 	
 	//登录
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody boolean login(String email, String password, HttpSession session) {
+	@ResponseBody
+	public boolean login(String email, String password, HttpSession session) {
 		boolean flag = false;//用户不存在或者邮件或密码错误
 		
 		User user = new User(email);
 		List<User> list = userService.selectUserListByEmail(user);
 		if(list.isEmpty()) {
-			logger.info("用户不存在");
 			return flag; //用户不存在
 		}
-		
 		user = list.get(0);
 		password = userService.encode(password, user.getSalt());
 		if(user.getPassword().equals(password)) {
